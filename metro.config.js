@@ -21,4 +21,7 @@ config.transformer.getTransformOptions = async () => ({
 // such as Firebase that use the extension cjs.
 config.resolver.sourceExts.push("cjs");
 
+// Add support for lottie files
+config.resolver.assetExts.push("lottie");
+
 module.exports = withNativeWind(wrapWithReanimatedMetroConfig(config), { input: "./global.css" });
