@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { FC } from "react";
-import { View, Text, SafeAreaView, StyleSheet } from "react-native";
+import { View, Text, SafeAreaView } from "react-native";
 import { AppStackScreenProps } from "../navigators";
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle";
 import { useAppTheme } from "@/utils/useAppTheme";
@@ -12,25 +12,10 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
   const { themed } = useAppTheme();
 
   return (
-    <SafeAreaView style={[styles.container, insets]}>
-      <View style={styles.contentContainer}>
-        <Text style={styles.welcomeText}>Welcome</Text>
+    <SafeAreaView style={insets} className="flex-1">
+      <View className="flex-1 justify-center items-center">
+        <Text className="text-2xl font-bold">Welcome</Text>
       </View>
     </SafeAreaView>
   );
-});
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  contentContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  welcomeText: {
-    fontSize: 24,
-    fontWeight: "bold",
-  },
 });
