@@ -37,7 +37,6 @@ module.exports = {
     "react-native",
     "unused-imports",
     "reactotron",
-    "prettier",
   ],
   overrides: [
     {

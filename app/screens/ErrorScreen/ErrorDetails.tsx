@@ -1,3 +1,4 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import { ErrorInfo } from "react";
 import {
   ScrollView,
@@ -9,7 +10,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+
 import type { ThemedStyle } from "@/theme";
 import { useAppTheme } from "@/utils/useAppTheme";
 

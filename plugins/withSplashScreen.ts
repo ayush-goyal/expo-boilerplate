@@ -1,4 +1,9 @@
-import { ConfigPlugin, withStringsXml, AndroidConfig, withAndroidStyles } from "expo/config-plugins"
+import {
+  ConfigPlugin,
+  withStringsXml,
+  AndroidConfig,
+  withAndroidStyles,
+} from "expo/config-plugins";
 
 /**
  *
@@ -10,9 +15,9 @@ import { ConfigPlugin, withStringsXml, AndroidConfig, withAndroidStyles } from "
  *   2) Set the splash screen status bar to translucent
  */
 export const withSplashScreen: ConfigPlugin = (config) => {
-  config = withAndroidSplashScreen(config)
-  return config
-}
+  config = withAndroidSplashScreen(config);
+  return config;
+};
 
 /**
  * Android implementation of the config plugin - the only platform needed for this plugin.
@@ -21,10 +26,10 @@ export const withSplashScreen: ConfigPlugin = (config) => {
  * add `withIosSplashScreen` for the iOS implementation.
  */
 const withAndroidSplashScreen: ConfigPlugin = (config) => {
-  config = withCustomStylesXml(config)
-  config = withCustomStringsXml(config)
-  return config
-}
+  config = withCustomStylesXml(config);
+  config = withCustomStringsXml(config);
+  return config;
+};
 
 /**
  * Modifies the `android/app/src/main/res/values/strings.xml` file to add the following string:
@@ -43,10 +48,10 @@ const withCustomStringsXml: ConfigPlugin = (config) =>
           },
         },
       ],
-      modConfig.modResults,
-    )
-    return modConfig
-  })
+      modConfig.modResults
+    );
+    return modConfig;
+  });
 
 /**
  * Modifies the `android/app/src/main/res/values/styles.xml` file to append the
@@ -64,6 +69,6 @@ const withCustomStylesXml: ConfigPlugin = (config) =>
         name: "Theme.App.SplashScreen",
         parent: "AppTheme",
       },
-    })
-    return modConfig
-  })
+    });
+    return modConfig;
+  });

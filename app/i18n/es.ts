@@ -1,4 +1,4 @@
-import { Translations } from "./en"
+import { Translations } from "./en";
 
 const es: Translations = {
   common: {
@@ -26,6 +26,6 @@ const es: Translations = {
       button: "Intentemos de nuevo",
     },
   },
-}
+};
 
-export default es
+export default es;

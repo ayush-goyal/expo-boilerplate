@@ -23,7 +23,7 @@ const en = {
       button: "Let's try this again",
     },
   },
-}
+};
 
-export default en
-export type Translations = typeof en
+export default en;
+export type Translations = typeof en;

@@ -1,7 +1,8 @@
-import { useEffect, useLayoutEffect } from "react"
-import { useNavigation } from "@react-navigation/native"
-import { Header, HeaderProps } from "../components"
-import { Platform } from "react-native"
+import { useNavigation } from "@react-navigation/native";
+import { useEffect, useLayoutEffect } from "react";
+import { Platform } from "react-native";
+
+import { Header, HeaderProps } from "../components";
 
 /**
  * A hook that can be used to easily set the Header of a react-navigation screen from within the screen's component.
@@ -11,9 +12,9 @@ import { Platform } from "react-native"
  */
 export function useHeader(
   headerProps: HeaderProps,
-  deps: Parameters<typeof useLayoutEffect>[1] = [],
+  deps: Parameters<typeof useLayoutEffect>[1] = []
 ) {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   /**
    * We need to have multiple implementations of this hook for web and mobile.
@@ -21,7 +22,7 @@ export function useHeader(
    * In mobile and also to avoid a visible header jump when navigating between screens, we use
    * `useLayoutEffect`, which will apply the settings before the screen renders.
    */
-  const usePlatformEffect = Platform.OS === "web" ? useEffect : useLayoutEffect
+  const usePlatformEffect = Platform.OS === "web" ? useEffect : useLayoutEffect;
 
   // To avoid a visible header jump when navigating between screens, we use
   // `useLayoutEffect`, which will apply the settings before the screen renders.
@@ -29,8 +30,8 @@ export function useHeader(
     navigation.setOptions({
       headerShown: true,
       header: () => <Header {...headerProps} />,
-    })
+    });
     // intentionally created API to have user set when they want to update the header via `deps`
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...deps, navigation])
+  }, [...deps, navigation]);
 }

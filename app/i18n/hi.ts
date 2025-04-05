@@ -1,4 +1,4 @@
-import { Translations } from "./en"
+import { Translations } from "./en";
 
 const hi: Translations = {
   common: {
@@ -25,6 +25,6 @@ const hi: Translations = {
       button: "चलो फिर से कोशिश करते हैं",
     },
   },
-}
+};
 
-export default hi
+export default hi;

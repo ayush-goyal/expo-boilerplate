@@ -1,4 +1,4 @@
-import { Translations } from "./en"
+import { Translations } from "./en";
 
 const ar: Translations = {
   common: {
@@ -25,6 +25,6 @@ const ar: Translations = {
       button: "لنحاول هذا مرّة أخرى",
     },
   },
-}
+};
 
-export default ar
+export default ar;

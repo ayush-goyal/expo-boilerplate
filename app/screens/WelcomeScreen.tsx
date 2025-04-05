@@ -1,9 +1,11 @@
 import { observer } from "mobx-react-lite";
 import { FC } from "react";
 import { View, Text, SafeAreaView } from "react-native";
+
+import { useAppTheme } from "@/utils/useAppTheme";
+
 import { AppStackScreenProps } from "../navigators";
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle";
-import { useAppTheme } from "@/utils/useAppTheme";
 
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 
