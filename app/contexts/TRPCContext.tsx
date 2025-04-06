@@ -5,8 +5,9 @@ import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client
 import { createTRPCClient, httpLink } from "@trpc/client";
 import { PropsWithChildren, useState } from "react";
 
+import Config from "@/config";
 import { useAuth } from "@/contexts/AuthContext";
-import { API_BASE_URL, AppRouter, TRPCProvider } from "@/libs/trpc";
+import { AppRouter, TRPCProvider } from "@/libs/trpc";
 
 // Create a new persister instance
 const asyncStoragePersister = createAsyncStoragePersister({
@@ -40,7 +41,7 @@ export const TrpcProvider = (props: PropsWithChildren<{}>) => {
     createTRPCClient<AppRouter>({
       links: [
         httpLink({
-          url: API_BASE_URL + "/trpc",
+          url: Config.API_URL + "/trpc",
           headers() {
             if (session?.access_token) {
               return {

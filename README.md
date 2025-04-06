@@ -44,7 +44,22 @@ A modern, feature-rich boilerplate for building mobile applications with React N
 
    - Update the variables in `.env` with your specific configuration
 
-4. Update app name and identifiers:
+4. Configure app config:
+
+   - Update environment variables in the following files:
+     - `config.base.ts`: Common configuration used across all environments
+     - `config.dev.ts`: Development-specific configuration
+     - `config.prod.ts`: Production-specific configuration
+   - Import and use configuration values in your code:
+
+     ```typescript
+     import Config from "@/config";
+
+     // Use a config value
+     const apiUrl = Config.API_URL;
+     ```
+
+5. Update app name and identifiers:
 
    - Update the app name, slug, and bundle identifiers in `app.json`:
 
