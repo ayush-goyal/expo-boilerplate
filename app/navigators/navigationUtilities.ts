@@ -7,7 +7,7 @@ import { useState, useEffect, useRef } from "react";
 import { BackHandler, Linking, Platform } from "react-native";
 
 import Config from "../config";
-import type { AppStackParamList, NavigationProps } from "./AppNavigator";
+import { NavigationProps, RootStackParamList } from "./NavigationTypes";
 import type { PersistNavigationConfig } from "../config/config.base";
 import * as storage from "../libs/storage";
 import { useIsMounted } from "../utils/useIsMounted";
@@ -22,7 +22,7 @@ import { useIsMounted } from "../utils/useIsMounted";
  * The types on this reference will only let you reference top level navigators. If you have
  * nested navigators, you'll need to use the `useNavigation` with the stack navigator's ParamList type.
  */
-export const navigationRef = createNavigationContainerRef<AppStackParamList>();
+export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
 /**
  * Gets the current screen from any navigation state.
@@ -33,10 +33,10 @@ export function getActiveRouteName(state: NavigationState | PartialState<Navigat
   const route = state.routes[state.index ?? 0];
 
   // Found the active route -- return the name
-  if (!route.state) return route.name as keyof AppStackParamList;
+  if (!route.state) return route.name as keyof RootStackParamList;
 
   // Recursive call to deal with nested routers
-  return getActiveRouteName(route.state as NavigationState<AppStackParamList>);
+  return getActiveRouteName(route.state as NavigationState<RootStackParamList>);
 }
 
 const iosExit = () => false;
@@ -121,7 +121,7 @@ export function useNavigationPersistence(persistenceKey: string) {
   const initNavState = navigationRestoredDefaultState(Config.persistNavigation);
   const [isRestored, setIsRestored] = useState(initNavState);
 
-  const routeNameRef = useRef<keyof AppStackParamList | undefined>();
+  const routeNameRef = useRef<keyof RootStackParamList | undefined>();
 
   const onNavigationStateChange = (state: NavigationState | undefined) => {
     const previousRouteName = routeNameRef.current;
@@ -136,7 +136,7 @@ export function useNavigationPersistence(persistenceKey: string) {
       }
 
       // Save the current route name for later comparison
-      routeNameRef.current = currentRouteName as keyof AppStackParamList;
+      routeNameRef.current = currentRouteName as keyof RootStackParamList;
 
       // Persist state to storage
       storage.save(persistenceKey, state);
