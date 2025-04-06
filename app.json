@@ -1,6 +1,4 @@
 {
-  "name": "ResyApp",
-  "displayName": "ResyApp",
   "expo": {
     "name": "ResyApp",
     "slug": "ResyApp",
@@ -17,10 +15,12 @@
     "assetBundlePatterns": ["**/*"],
     "android": {
       "package": "com.glacierlabs.resyapp",
-      "allowBackup": false
+      "allowBackup": false,
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "ios": {
-      "bundleIdentifier": "com.glacierlabs.resyapp"
+      "bundleIdentifier": "com.glacierlabs.resyapp",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "web": {
       "bundler": "metro"
@@ -35,6 +35,21 @@
           "imageWidth": 300,
           "resizeMode": "contain",
           "backgroundColor": "#191015"
+        }
+      ],
+      "@react-native-firebase/app",
+      [
+        "react-native-permissions",
+        {
+          "iosPermissions": ["Notifications"]
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
         }
       ]
     ],

@@ -18,61 +18,45 @@ if (__DEV__) {
 }
 import "./utils/gestureHandler";
 import "./utils/ignoreWarnings";
+import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import * as Linking from "expo-linking";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect, useState } from "react";
+import { PostHogProvider } from "posthog-react-native";
+import React, { useEffect, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
-import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context";
+import {
+  initialWindowMetrics,
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 
 import Config from "./config";
 import { initI18n } from "./i18n";
-import { useInitialRootStore } from "./models";
-import { AppNavigator, useNavigationPersistence } from "./navigators";
+import { AppNavigator, navigationRef, useNavigationPersistence } from "./navigators";
 import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary";
 import { customFontsToLoad } from "./theme";
 import { loadDateFnsLocale } from "./utils/formatDate";
-import * as storage from "./utils/storage";
 import "../global.css";
+import { AuthProvider } from "./contexts/AuthContext";
+import { RevenueCatProvider, useRevenueCat } from "./contexts/RevenueCatContext";
+import { NotificationProvider } from "./contexts/NotificationContext";
+import { TrpcProvider } from "./contexts/TRPCContext";
+import { useThemeProvider } from "./utils/useAppTheme";
+import { useToastConfig } from "./libs/hooks/useToastConfig";
+
+import Toast from "react-native-toast-message";
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE";
+SplashScreen.preventAutoHideAsync();
 
-// Web linking configuration
-const prefix = Linking.createURL("/");
-const config = {
-  screens: {
-    Login: {
-      path: "",
-    },
-    Welcome: "welcome",
-    Demo: {
-      screens: {
-        DemoShowroom: {
-          path: "showroom/:queryIndex?/:itemIndex?",
-        },
-        DemoDebug: "debug",
-        DemoPodcastList: "podcast",
-        DemoCommunity: "community",
-      },
-    },
-  },
-};
-
-/**
- * This is the root component of our app.
- * @param {AppProps} props - The props for the `App` component.
- * @returns {JSX.Element} The rendered `App` component.
- */
-export function App() {
-  const {
-    initialNavigationState,
-    onNavigationStateChange,
-    isRestored: isNavigationStateRestored,
-  } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY);
+const AppWrapper = ({ children }: { children: React.ReactNode }) => {
+  const toastConfig = useToastConfig();
+  const insets = useSafeAreaInsets();
 
   const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad);
   const [isI18nInitialized, setIsI18nInitialized] = useState(false);
+  const { isLoading: isRevenueCatLoading } = useRevenueCat();
 
   useEffect(() => {
     initI18n()
@@ -84,48 +68,78 @@ export function App() {
       });
   }, []);
 
-  const { rehydrated } = useInitialRootStore(() => {
-    // This runs after the root store has been initialized and rehydrated.
+  useEffect(() => {
+    if (isI18nInitialized && (areFontsLoaded || fontLoadError) && !isRevenueCatLoading) {
+      SplashScreen.hideAsync();
+    }
+  }, [isI18nInitialized, areFontsLoaded, fontLoadError, isRevenueCatLoading]);
 
-    // If your initialization scripts run very fast, it's good to show the splash screen for just a bit longer to prevent flicker.
-    // Slightly delaying splash screen hiding for better UX; can be customized or removed as needed,
-    setTimeout(SplashScreen.hideAsync, 500);
-  });
+  return (
+    <>
+      {children}
+      <Toast config={toastConfig} topOffset={insets.top} />
+    </>
+  );
+};
 
-  // Before we show the app, we have to wait for our state to be ready.
-  // In the meantime, don't render anything. This will be the background
-  // color set in native by rootView's background color.
-  // In iOS: application:didFinishLaunchingWithOptions:
-  // In Android: https://stackoverflow.com/a/45838109/204044
-  // You can replace with your own loading component if you wish.
-  if (
-    !rehydrated ||
-    !isNavigationStateRestored ||
-    !isI18nInitialized ||
-    (!areFontsLoaded && !fontLoadError)
-  ) {
+export function App() {
+  const {
+    initialNavigationState,
+    onNavigationStateChange,
+    isRestored: isNavigationStateRestored,
+  } = useNavigationPersistence(NAVIGATION_PERSISTENCE_KEY);
+
+  const { themeScheme, navigationTheme, setThemeContextOverride, ThemeProvider } =
+    useThemeProvider();
+
+  // TODO: Refactor this to be hidden later
+  if (!isNavigationStateRestored) {
     return null;
   }
 
-  const linking = {
-    prefixes: [prefix],
-    config,
-  };
-
-  // otherwise, we're ready to render the app
   return (
-    <GestureHandlerRootView>
-      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-        <ErrorBoundary catchErrors={Config.catchErrors}>
-          <KeyboardProvider>
-            <AppNavigator
-              linking={linking}
-              initialState={initialNavigationState}
-              onStateChange={onNavigationStateChange}
-            />
-          </KeyboardProvider>
-        </ErrorBoundary>
-      </SafeAreaProvider>
-    </GestureHandlerRootView>
+    <ErrorBoundary catchErrors={Config.catchErrors}>
+      <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
+        <NavigationContainer
+          ref={navigationRef}
+          theme={navigationTheme}
+          initialState={initialNavigationState}
+          onStateChange={onNavigationStateChange}
+        >
+          <PostHogProvider
+            apiKey={process.env.EXPO_PUBLIC_POSTHOG_API_KEY ?? " "}
+            options={{
+              host: "https://us.i.posthog.com",
+              disabled: __DEV__,
+            }}
+            autocapture={{
+              captureTouches: false,
+              captureLifecycleEvents: true,
+              captureScreens: true,
+              customLabelProp: "ph-label",
+              noCaptureProp: "ph-no-capture",
+            }}
+          >
+            <AuthProvider>
+              <RevenueCatProvider>
+                <TrpcProvider>
+                  <NotificationProvider>
+                    <GestureHandlerRootView>
+                      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+                        <KeyboardProvider>
+                          <AppWrapper>
+                            <AppNavigator />
+                          </AppWrapper>
+                        </KeyboardProvider>
+                      </SafeAreaProvider>
+                    </GestureHandlerRootView>
+                  </NotificationProvider>
+                </TrpcProvider>
+              </RevenueCatProvider>
+            </AuthProvider>
+          </PostHogProvider>
+        </NavigationContainer>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }

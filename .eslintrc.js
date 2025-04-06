@@ -50,6 +50,7 @@ module.exports = {
     // React related rules
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
+    "react/no-unescaped-entities": "off",
 
     // TypeScript specific
     "@typescript-eslint/no-unused-vars": "off", // Handled by unused-imports
@@ -60,6 +61,7 @@ module.exports = {
     "@typescript-eslint/no-require-imports": "off",
     "@typescript-eslint/no-empty-object-type": "off",
     "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/no-unnecessary-type-assertion": "off",
 
     // Unused imports handling (from FILE 1)
     "unused-imports/no-unused-imports": "warn",
@@ -81,18 +83,6 @@ module.exports = {
 
     // Other rules from FILE 2
     "no-use-before-define": "off",
-    "no-restricted-imports": [
-      "error",
-      {
-        paths: [
-          // Prefer named exports from 'react' instead of importing `React`
-          {
-            name: "react",
-            importNames: ["default"],
-            message: "Import named exports from 'react' instead.",
-          },
-        ],
-      },
-    ],
+    "no-restricted-imports": ["error"],
   },
 };

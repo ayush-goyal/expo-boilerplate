@@ -9,10 +9,8 @@ import { BackHandler, Linking, Platform } from "react-native";
 import Config from "../config";
 import type { AppStackParamList, NavigationProps } from "./AppNavigator";
 import type { PersistNavigationConfig } from "../config/config.base";
-import * as storage from "../utils/storage";
+import * as storage from "../libs/storage";
 import { useIsMounted } from "../utils/useIsMounted";
-
-type Storage = typeof storage;
 
 /**
  * Reference to the root App Navigator.
@@ -112,11 +110,10 @@ function navigationRestoredDefaultState(persistNavigation: PersistNavigationConf
 
 /**
  * Custom hook for persisting navigation state.
- * @param {Storage} storage - The storage utility to use.
  * @param {string} persistenceKey - The key to use for storing the navigation state.
  * @returns {object} - The navigation state and persistence functions.
  */
-export function useNavigationPersistence(storage: Storage, persistenceKey: string) {
+export function useNavigationPersistence(persistenceKey: string) {
   const [initialNavigationState, setInitialNavigationState] =
     useState<NavigationProps["initialState"]>();
   const isMounted = useIsMounted();
@@ -152,7 +149,9 @@ export function useNavigationPersistence(storage: Storage, persistenceKey: strin
 
       // Only restore the state if app has not started from a deep link
       if (!initialUrl) {
-        const state = await storage.load(persistenceKey);
+        const state = (await storage.load(persistenceKey)) as
+          | NavigationProps["initialState"]
+          | null;
         if (state) setInitialNavigationState(state);
       }
     } finally {

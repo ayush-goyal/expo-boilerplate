@@ -9,8 +9,8 @@ import { mst } from "reactotron-mst";
 import { ReactotronReactNative } from "reactotron-react-native";
 import mmkvPlugin from "reactotron-react-native-mmkv";
 
+import { storage, clear } from "@/libs/storage";
 import { goBack, resetRoot, navigate } from "@/navigators/navigationUtilities";
-import { storage, clear } from "@/utils/storage";
 
 import { Reactotron } from "./ReactotronClient";
 
