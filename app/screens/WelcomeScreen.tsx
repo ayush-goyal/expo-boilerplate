@@ -1,17 +1,14 @@
-import { observer } from "mobx-react-lite";
 import { FC } from "react";
 import { View, Text, SafeAreaView } from "react-native";
 
-import { useAppTheme } from "@/utils/useAppTheme";
+import { RootStackScreenProps } from "@/navigators/NavigationTypes";
 
-import { AppStackScreenProps } from "../navigators";
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle";
 
-interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
+interface WelcomeScreenProps extends RootStackScreenProps<"Welcome"> {}
 
-export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen() {
+export const WelcomeScreen: FC<WelcomeScreenProps> = () => {
   const insets = useSafeAreaInsetsStyle(["top", "bottom"]);
-  const { themed } = useAppTheme();
 
   return (
     <SafeAreaView style={insets} className="flex-1">
@@ -20,4 +17,4 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
       </View>
     </SafeAreaView>
   );
-});
+};
