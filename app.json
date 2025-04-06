@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "ResyApp",
-    "slug": "ResyApp",
-    "scheme": "resyapp",
+    "name": "ExpoBoilerplate",
+    "slug": "ExpoBoilerplate",
+    "scheme": "expoboilerplate",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
@@ -14,12 +14,12 @@
     "jsEngine": "hermes",
     "assetBundlePatterns": ["**/*"],
     "android": {
-      "package": "com.glacierlabs.resyapp",
+      "package": "com.expoboilerplate",
       "allowBackup": false,
       "googleServicesFile": "./GoogleService-Info.plist"
     },
     "ios": {
-      "bundleIdentifier": "com.glacierlabs.resyapp",
+      "bundleIdentifier": "com.expoboilerplate",
       "googleServicesFile": "./GoogleService-Info.plist"
     },
     "web": {
