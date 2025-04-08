@@ -56,7 +56,10 @@ module.exports = {
     "@typescript-eslint/no-floating-promises": "off",
     "@typescript-eslint/no-unnecessary-type-assertion": "off",
 
-    // Unused imports handling (from FILE 1)
+    // React Native
+    "react-native/no-raw-text": "off",
+
+    // Unused imports
     "unused-imports/no-unused-imports": "warn",
     "unused-imports/no-unused-vars": [
       "warn", // Using warn instead of error to be less strict
@@ -68,11 +71,9 @@ module.exports = {
       },
     ],
 
-    // React Native
-    "react-native/no-raw-text": "off",
-
-    // Other rules from FILE 2
+    // Other rules
     "no-use-before-define": "off",
     "no-restricted-imports": ["error"],
+    "import/order": "off",
   },
 };
