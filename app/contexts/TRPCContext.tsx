@@ -34,7 +34,15 @@ const queryClient = new QueryClient({
 });
 
 export const TrpcProvider = (props: PropsWithChildren<{}>) => {
-  const { session } = useAuth();
+  const { user } = useAuth();
+
+  const getAuthorizationToken = async () => {
+    if (!user) {
+      return undefined;
+    }
+    const firebaseToken = await user.getIdToken();
+    return `Bearer ${firebaseToken}`;
+  };
 
   // Create the tRPC client
   const [trpcClient] = useState(() =>
@@ -42,10 +50,10 @@ export const TrpcProvider = (props: PropsWithChildren<{}>) => {
       links: [
         httpLink({
           url: Config.API_URL + "/trpc",
-          headers() {
-            if (session?.access_token) {
+          async headers() {
+            if (user?.getIdToken()) {
               return {
-                Authorization: `Bearer ${session.access_token}`,
+                Authorization: await getAuthorizationToken(),
               };
             }
             return {};

@@ -20,7 +20,7 @@ export function RevenueCatProvider({ children }: { children: React.ReactNode }) 
   const [customerInfo, setCustomerInfo] = useState<CustomerInfo | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
-  const { session } = useAuth();
+  const { user } = useAuth();
   const appState = useAppState();
 
   const isProMember = Boolean(customerInfo?.entitlements.active["Pro"]);
@@ -31,16 +31,16 @@ export function RevenueCatProvider({ children }: { children: React.ReactNode }) 
 
   useEffect(() => {
     (async () => {
-      if (session?.user && appState === "active") {
+      if (user && appState === "active") {
         await updateCustomerInfo();
         try {
-          await Purchases.logIn(session.user.id);
+          await Purchases.logIn(user.uid);
         } catch (error) {
           console.error("Error logging into RevenueCat:", error);
         }
       }
     })();
-  }, [session?.user, appState]);
+  }, [user, appState]);
 
   const initializeRevenueCat = async () => {
     try {
