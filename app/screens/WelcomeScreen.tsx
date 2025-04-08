@@ -1,9 +1,10 @@
 import { FC } from "react";
-import { View, Text, SafeAreaView } from "react-native";
+import { View, SafeAreaView } from "react-native";
 
+import StyledText from "@/components/StyledText";
 import { RootStackScreenProps } from "@/navigators/NavigationTypes";
 
-import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle";
+import { useSafeAreaInsetsStyle } from "../hooks/useSafeAreaInsetsStyle";
 
 interface WelcomeScreenProps extends RootStackScreenProps<"Welcome"> {}
 
@@ -13,7 +14,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = () => {
   return (
     <SafeAreaView style={insets} className="flex-1">
       <View className="flex-1 justify-center items-center">
-        <Text className="text-2xl font-bold">Welcome</Text>
+        <StyledText className="text-2xl font-bold">Hello world</StyledText>
       </View>
     </SafeAreaView>
   );

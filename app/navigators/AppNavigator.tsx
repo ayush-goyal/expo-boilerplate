@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import * as Screens from "@/screens";
-import { useAppTheme } from "@/utils/useAppTheme";
+import { useAppTheme } from "@/theme/useAppTheme";
 
 import Config from "../config";
 import { RootStackParamList } from "./NavigationTypes";

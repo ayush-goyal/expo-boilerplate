@@ -12,7 +12,7 @@ import {
 } from "react-native";
 
 import type { ThemedStyle } from "@/theme";
-import { useAppTheme } from "@/utils/useAppTheme";
+import { useAppTheme } from "@/theme/useAppTheme";
 
 export interface ErrorDetailsProps {
   error: Error;

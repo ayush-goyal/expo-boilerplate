@@ -2,7 +2,7 @@ import { StyleProp, TextStyle, ViewStyle } from "react-native";
 import { ErrorToast, SuccessToast, ToastConfig } from "react-native-toast-message";
 import colors from "tailwindcss/colors";
 
-import { themeColors } from "../colors";
+import { themeColors } from "@/libs/colors";
 
 export const useToastConfig = () => {
   const commonStyle: StyleProp<ViewStyle> = {

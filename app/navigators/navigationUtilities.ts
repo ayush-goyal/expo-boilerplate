@@ -6,11 +6,12 @@ import {
 import { useState, useEffect, useRef } from "react";
 import { BackHandler, Linking, Platform } from "react-native";
 
+import { useIsMounted } from "@/hooks/useIsMounted";
+
 import Config from "../config";
 import { NavigationProps, RootStackParamList } from "./NavigationTypes";
 import type { PersistNavigationConfig } from "../config/config.base";
 import * as storage from "../libs/storage";
-import { useIsMounted } from "../utils/useIsMounted";
 
 /**
  * Reference to the root App Navigator.

@@ -23,8 +23,8 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { RevenueCatProvider, useRevenueCat } from "./contexts/RevenueCatContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import { TrpcProvider } from "./contexts/TRPCContext";
-import { useThemeProvider } from "./utils/useAppTheme";
-import { useToastConfig } from "./libs/hooks/useToastConfig";
+import { useThemeProvider } from "./theme/useAppTheme";
+import { useToastConfig } from "./hooks/useToastConfig";
 import "./libs/firebase-app-check";
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE";
