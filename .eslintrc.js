@@ -30,14 +30,7 @@ module.exports = {
     ecmaVersion: 11,
     sourceType: "module",
   },
-  plugins: [
-    "@typescript-eslint",
-    "import",
-    "react",
-    "react-native",
-    "unused-imports",
-    "reactotron",
-  ],
+  plugins: ["@typescript-eslint", "import", "react", "react-native", "unused-imports"],
   overrides: [
     {
       files: ["*.ts", "*.tsx", "*.d.ts"],
@@ -77,9 +70,6 @@ module.exports = {
 
     // React Native
     "react-native/no-raw-text": "off",
-
-    // Reactotron
-    "reactotron/no-tron-in-production": "error",
 
     // Other rules from FILE 2
     "no-use-before-define": "off",

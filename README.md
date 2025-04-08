@@ -18,7 +18,6 @@ A modern, feature-rich boilerplate for building mobile applications with React N
 - PostHog analytics with session replay
 - Development tools:
   - ESLint & Prettier
-  - Reactotron for debugging
 
 ## Prerequisites
 
@@ -99,10 +98,6 @@ Run on Android emulator:
 ```bash
 yarn android
 ```
-
-### Debugging
-
-To debug with Reactotron, make sure to have it installed on your development machine. The boilerplate comes pre-configured for Reactotron debugging.
 
 ## Building for Production
 
