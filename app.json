@@ -20,7 +20,15 @@
     },
     "ios": {
       "bundleIdentifier": "com.expoboilerplate",
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "supportsTablet": false,
+      "infoPlist": {
+        "UIBackgroundModes": ["remote-notification", "processing"],
+        "BGTaskSchedulerPermittedIdentifiers": ["com.expoboilerplate"]
+      },
+      "entitlements": {
+        "aps-environment": "production"
+      }
     },
     "web": {
       "bundler": "metro"
@@ -38,6 +46,8 @@
         }
       ],
       "@react-native-firebase/app",
+      "@react-native-firebase/auth",
+      "@react-native-firebase/app-check",
       [
         "react-native-permissions",
         {

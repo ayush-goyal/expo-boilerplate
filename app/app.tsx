@@ -25,6 +25,7 @@ import { NotificationProvider } from "./contexts/NotificationContext";
 import { TrpcProvider } from "./contexts/TRPCContext";
 import { useThemeProvider } from "./utils/useAppTheme";
 import { useToastConfig } from "./libs/hooks/useToastConfig";
+import "./libs/firebaseAppCheck";
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE";
 SplashScreen.preventAutoHideAsync();
