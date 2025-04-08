@@ -5,6 +5,8 @@ import Purchases, { CustomerInfo, PurchasesPackage } from "react-native-purchase
 
 import { useAuth } from "./AuthContext";
 
+const IS_REVENUE_CAT_ENABLED = !!process.env.EXPO_PUBLIC_REVENUE_CAT_API_KEY;
+
 type RevenueCatContextType = {
   customerInfo: CustomerInfo | null;
   isLoading: boolean;
@@ -31,7 +33,7 @@ export function RevenueCatProvider({ children }: { children: React.ReactNode }) 
 
   useEffect(() => {
     (async () => {
-      if (user && appState === "active") {
+      if (user && appState === "active" && IS_REVENUE_CAT_ENABLED) {
         await updateCustomerInfo();
         try {
           await Purchases.logIn(user.uid);
@@ -47,7 +49,7 @@ export function RevenueCatProvider({ children }: { children: React.ReactNode }) 
       const apiKey = process.env.EXPO_PUBLIC_REVENUE_CAT_API_KEY;
 
       if (!apiKey) {
-        console.log("RevenueCat API key not set, skipping initialization");
+        console.warn("RevenueCat API key not set, skipping initialization");
         setIsLoading(false);
         return;
       }
@@ -74,6 +76,8 @@ export function RevenueCatProvider({ children }: { children: React.ReactNode }) 
   };
 
   const updateCustomerInfo = async () => {
+    if (!IS_REVENUE_CAT_ENABLED) return;
+
     try {
       const info = await Purchases.getCustomerInfo();
       setCustomerInfo(info);
@@ -83,6 +87,8 @@ export function RevenueCatProvider({ children }: { children: React.ReactNode }) 
   };
 
   const restorePurchases = async () => {
+    if (!IS_REVENUE_CAT_ENABLED) return;
+
     try {
       const info = await Purchases.restorePurchases();
       setCustomerInfo(info);

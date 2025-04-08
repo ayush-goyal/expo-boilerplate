@@ -64,8 +64,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setIsInitializing(false);
     });
 
-    return () => unsubscribe();
-  }, [posthog]);
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const signInWithPhoneNumber = useCallback(async (phoneNumber: string, forceResend?: boolean) => {
     try {
