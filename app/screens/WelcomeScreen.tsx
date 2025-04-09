@@ -2,11 +2,11 @@ import { FC } from "react";
 import { View, SafeAreaView } from "react-native";
 
 import StyledText from "@/components/StyledText";
-import { RootStackScreenProps } from "@/navigators/NavigationTypes";
+import { HomeTabStackScreenProps } from "@/navigators/NavigationTypes";
 
 import { useSafeAreaInsetsStyle } from "../hooks/useSafeAreaInsetsStyle";
 
-interface WelcomeScreenProps extends RootStackScreenProps<"Welcome"> {}
+interface WelcomeScreenProps extends HomeTabStackScreenProps<"Welcome"> {}
 
 export const WelcomeScreen: FC<WelcomeScreenProps> = () => {
   const insets = useSafeAreaInsetsStyle(["top", "bottom"]);

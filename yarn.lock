@@ -2552,6 +2552,14 @@
     invariant "^2.2.4"
     nullthrows "^1.1.1"
 
+"@react-navigation/bottom-tabs@^7.3.10":
+  version "7.3.10"
+  resolved "https://registry.yarnpkg.com/@react-navigation/bottom-tabs/-/bottom-tabs-7.3.10.tgz#19fa84d730d7040982edeba08542a37a50eb2a16"
+  integrity sha512-qRCr7LHFpzEJFuG2Id9NNXT2GBgu+zZ7wK8UO0bRuaxXK1y6W09k6+fDcDUDR67tHIB4HvfHCj1VyeSEW8uorg==
+  dependencies:
+    "@react-navigation/elements" "^2.3.8"
+    color "^4.2.3"
+
 "@react-navigation/core@^7.8.4":
   version "7.8.4"
   resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-7.8.4.tgz#3760c91d419f896efa4b4e6e0abce2cbf01595e1"
@@ -2569,6 +2577,13 @@
   version "2.3.7"
   resolved "https://registry.yarnpkg.com/@react-navigation/elements/-/elements-2.3.7.tgz#5b9d7aed04fef2993bb0f235a6811da6aab198f1"
   integrity sha512-7IrtOu+2qck7Tc+7bNR1HI/8ZuaRe4XKQ0+WyWErq01hmK79cqGZ+/k4hy0EOQMBndUJ/kb3x+W/xP4G8sdTQg==
+  dependencies:
+    color "^4.2.3"
+
+"@react-navigation/elements@^2.3.8":
+  version "2.3.8"
+  resolved "https://registry.yarnpkg.com/@react-navigation/elements/-/elements-2.3.8.tgz#ebf32b2f4540b5f6391a937e437ac7f4aed1f2d4"
+  integrity sha512-2ZVBtPfrkmOxzvIyDu3fPZ6aS4HcXL+TvzPDGa1znY2OP1Llo6wH14AmJHQFDquiInp2656hRMM1BkfJ3yPwew==
   dependencies:
     color "^4.2.3"
 
@@ -2597,6 +2612,14 @@
   integrity sha512-900HZnE6mN/DnQFVpV4XAXwZaexFWzy74D/uvWQmvgsTVK/REPuDJbvsVELio/OYqskJv0ewnOPErQFfQ0SQAg==
   dependencies:
     nanoid "3.3.8"
+
+"@react-navigation/stack@^7.2.10":
+  version "7.2.10"
+  resolved "https://registry.yarnpkg.com/@react-navigation/stack/-/stack-7.2.10.tgz#925c607178b828f77e00088d4ee9db07a6d3c085"
+  integrity sha512-8exYxg/3goQkmtAJFIPpKbFOiMmNRSf99qs5ssX1gQ2JEhwloBl7Bw0snccB1JJ7rghjD5bogj+zcQdC8KSYeg==
+  dependencies:
+    "@react-navigation/elements" "^2.3.8"
+    color "^4.2.3"
 
 "@revenuecat/purchases-typescript-internal@13.26.1":
   version "13.26.1"
@@ -5187,6 +5210,11 @@ expo-font@~13.0.1, expo-font@~13.0.4:
   dependencies:
     fontfaceobserver "^2.1.0"
 
+expo-haptics@^14.0.1:
+  version "14.0.1"
+  resolved "https://registry.yarnpkg.com/expo-haptics/-/expo-haptics-14.0.1.tgz#ff4ead605e33f1917e615c9328af7ac1c34892dc"
+  integrity sha512-V81FZ7xRUfqM6uSI6FA1KnZ+QpEKnISqafob/xEfcx1ymwhm4V3snuLWWFjmAz+XaZQTqlYa8z3QbqEXz7G63w==
+
 expo-json-utils@~0.14.0:
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/expo-json-utils/-/expo-json-utils-0.14.0.tgz#ad3cbbcb4fb22e4d23bf9fb19b611e36758861d2"
@@ -7378,6 +7406,11 @@ lru-cache@^5.1.1:
   integrity sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==
   dependencies:
     yallist "^3.0.2"
+
+lucide-react-native@^0.487.0:
+  version "0.487.0"
+  resolved "https://registry.yarnpkg.com/lucide-react-native/-/lucide-react-native-0.487.0.tgz#257bc19feb537fe4eac0be5a8da1839f59f4eeff"
+  integrity sha512-A1GSuAZpIqludjUVcdsWJbrsFtxevZea432rMx2N1wnAh5ZY07MA4osrem/Wjc3gfJjK2oF8yvhMRlbq85VcQQ==
 
 make-dir@^2.0.0, make-dir@^2.1.0:
   version "2.1.0"
