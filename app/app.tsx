@@ -1,4 +1,4 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { PostHogProvider } from "posthog-react-native";
@@ -16,25 +16,31 @@ import Config from "./config";
 import { initI18n } from "./i18n";
 import { AppNavigator, navigationRef, useNavigationPersistence } from "./navigators";
 import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary";
-import { customFontsToLoad } from "./theme";
 import { loadDateFnsLocale } from "./utils/formatDate";
 import "../global.css";
 import { AuthProvider } from "./contexts/AuthContext";
 import { RevenueCatProvider, useRevenueCat } from "./contexts/RevenueCatContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import { TrpcProvider } from "./contexts/TRPCContext";
-import { useThemeProvider } from "./theme/useAppTheme";
 import { useToastConfig } from "./hooks/useToastConfig";
 import "./libs/firebase-app-check";
+import { ThemeProvider } from "./contexts/ThemeContext";
+import { useColorScheme } from "react-native";
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE";
 SplashScreen.preventAutoHideAsync();
 
 const AppWrapper = ({ children }: { children: React.ReactNode }) => {
+  const {
+    initialNavigationState,
+    onNavigationStateChange,
+    isRestored: isNavigationStateRestored,
+  } = useNavigationPersistence(NAVIGATION_PERSISTENCE_KEY);
+  const theme = useColorScheme();
   const toastConfig = useToastConfig();
   const insets = useSafeAreaInsets();
 
-  const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad);
+  const [areFontsLoaded, fontLoadError] = useFonts({});
   const [isI18nInitialized, setIsI18nInitialized] = useState(false);
   const { isLoading: isRevenueCatLoading } = useRevenueCat();
 
@@ -49,76 +55,75 @@ const AppWrapper = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    if (isI18nInitialized && (areFontsLoaded || fontLoadError) && !isRevenueCatLoading) {
+    if (
+      isI18nInitialized &&
+      (areFontsLoaded || fontLoadError) &&
+      !isRevenueCatLoading &&
+      isNavigationStateRestored
+    ) {
       SplashScreen.hideAsync();
     }
-  }, [isI18nInitialized, areFontsLoaded, fontLoadError, isRevenueCatLoading]);
+  }, [
+    isI18nInitialized,
+    areFontsLoaded,
+    fontLoadError,
+    isRevenueCatLoading,
+    isNavigationStateRestored,
+  ]);
 
-  return (
-    <>
-      {children}
-      <Toast config={toastConfig} topOffset={insets.top} />
-    </>
-  );
-};
-
-export function App() {
-  const {
-    initialNavigationState,
-    onNavigationStateChange,
-    isRestored: isNavigationStateRestored,
-  } = useNavigationPersistence(NAVIGATION_PERSISTENCE_KEY);
-
-  const { themeScheme, navigationTheme, setThemeContextOverride, ThemeProvider } =
-    useThemeProvider();
-
-  // TODO: Refactor this to be hidden later
   if (!isNavigationStateRestored) {
     return null;
   }
 
   return (
+    <NavigationContainer
+      ref={navigationRef}
+      theme={theme === "dark" ? DarkTheme : DefaultTheme}
+      initialState={initialNavigationState}
+      onStateChange={onNavigationStateChange}
+    >
+      <PostHogProvider
+        apiKey={process.env.EXPO_PUBLIC_POSTHOG_API_KEY ?? " "}
+        options={{
+          host: "https://us.i.posthog.com",
+          disabled: __DEV__,
+        }}
+        autocapture={{
+          captureTouches: false,
+          captureLifecycleEvents: true,
+          captureScreens: true,
+          customLabelProp: "ph-label",
+          noCaptureProp: "ph-no-capture",
+        }}
+      >
+        {children}
+        <Toast config={toastConfig} topOffset={insets.top} />
+      </PostHogProvider>
+    </NavigationContainer>
+  );
+};
+
+export function App() {
+  return (
     <ErrorBoundary catchErrors={Config.catchErrors}>
-      <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
-        <NavigationContainer
-          ref={navigationRef}
-          theme={navigationTheme}
-          initialState={initialNavigationState}
-          onStateChange={onNavigationStateChange}
-        >
-          <PostHogProvider
-            apiKey={process.env.EXPO_PUBLIC_POSTHOG_API_KEY ?? " "}
-            options={{
-              host: "https://us.i.posthog.com",
-              disabled: __DEV__,
-            }}
-            autocapture={{
-              captureTouches: false,
-              captureLifecycleEvents: true,
-              captureScreens: true,
-              customLabelProp: "ph-label",
-              noCaptureProp: "ph-no-capture",
-            }}
-          >
-            <AuthProvider>
-              <RevenueCatProvider>
-                <TrpcProvider>
-                  <NotificationProvider>
-                    <GestureHandlerRootView>
-                      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-                        <KeyboardProvider>
-                          <AppWrapper>
-                            <AppNavigator />
-                          </AppWrapper>
-                        </KeyboardProvider>
-                      </SafeAreaProvider>
-                    </GestureHandlerRootView>
-                  </NotificationProvider>
-                </TrpcProvider>
-              </RevenueCatProvider>
-            </AuthProvider>
-          </PostHogProvider>
-        </NavigationContainer>
+      <ThemeProvider>
+        <AuthProvider>
+          <RevenueCatProvider>
+            <TrpcProvider>
+              <NotificationProvider>
+                <GestureHandlerRootView>
+                  <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+                    <KeyboardProvider>
+                      <AppWrapper>
+                        <AppNavigator />
+                      </AppWrapper>
+                    </KeyboardProvider>
+                  </SafeAreaProvider>
+                </GestureHandlerRootView>
+              </NotificationProvider>
+            </TrpcProvider>
+          </RevenueCatProvider>
+        </AuthProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );

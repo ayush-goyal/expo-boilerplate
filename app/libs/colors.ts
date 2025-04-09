@@ -29,7 +29,7 @@ export const themeColors = {
   },
 };
 
-export const themes = {
+export const themeColorsTailwind = {
   light: vars({
     "--color-primary-default": themeColors.light.primary,
     "--color-secondary-default": themeColors.light.secondary,
@@ -59,3 +59,5 @@ export const themes = {
     "--color-card": themeColors.dark.card,
   }),
 };
+
+export type ThemeColors = typeof themeColors.light;
