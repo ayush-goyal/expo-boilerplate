@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
 import { QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
-import { createTRPCClient, httpLink } from "@trpc/client";
+import { createTRPCClient, httpLink, loggerLink } from "@trpc/client";
 import { PropsWithChildren, useState } from "react";
 
 import Config from "@/config";
@@ -58,6 +58,10 @@ export const TrpcProvider = (props: PropsWithChildren<{}>) => {
             }
             return {};
           },
+        }),
+        loggerLink({
+          enabled: () => __DEV__,
+          colorMode: "ansi",
         }),
       ],
     })
