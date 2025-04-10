@@ -7,10 +7,14 @@
  * need to use are documented accordingly near the end.
  */
 import { initTRPC, TRPCError } from "@trpc/server";
+import { FetchCreateContextFn } from "@trpc/server/adapters/fetch";
+import {
+  CreateNextContextOptions,
+  NextApiRequest,
+} from "@trpc/server/adapters/next";
+import { DecodedIdToken, getAuth } from "firebase-admin/auth";
 import superjson from "superjson";
 import { ZodError } from "zod";
-
-import { auth, type Session } from "lib/auth";
 
 /**
  * 1. CONTEXT
@@ -24,14 +28,25 @@ import { auth, type Session } from "lib/auth";
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createTRPCContext = async (opts: { headers: Headers }) => {
-  const authSession = await auth.api.getSession({
-    headers: opts.headers,
-  });
+// TODO: fix this
+export const createTRPCContext = async ({ headers }: { headers: any }) => {
+  let decodedIdToken: DecodedIdToken | null = null;
 
+  try {
+    if (headers?.authorization?.startsWith("Bearer ")) {
+      const idToken = headers.authorization.split("Bearer ")[1];
+      if (idToken) {
+        decodedIdToken = await getAuth().verifyIdToken(idToken);
+      }
+    }
+  } catch (err) {
+    throw new TRPCError({
+      code: "BAD_REQUEST",
+      cause: err,
+    });
+  }
   return {
-    ...opts,
-    session: authSession,
+    session: decodedIdToken,
   };
 };
 
@@ -95,14 +110,14 @@ export const publicProcedure = t.procedure;
  * It will throw a UNAUTHORIZED error if the user is not authenticated.
  */
 export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
-  if (!ctx.session?.user?.id) {
+  if (!ctx.session?.uid) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
 
   return next({
     ctx: {
       ...ctx,
-      session: ctx.session, // Use non-null assertion since we've checked user exists
+      session: ctx.session,
     },
   });
 });

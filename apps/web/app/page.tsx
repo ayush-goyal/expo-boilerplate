@@ -1,9 +1,18 @@
 "use client";
 
-export default function Home() {
+import { useQuery } from "@tanstack/react-query";
+import { useTRPC } from "trpc/react";
+
+export default function HomePage() {
+  const trpc = useTRPC();
+  const { data } = useQuery(trpc.getUserCount.queryOptions());
+
   return (
-    <main className="bg-background flex min-h-screen flex-col items-center justify-center p-8">
-      <h1 className="mb-8 text-4xl font-semibold">Hello world</h1>
+    <main className="container h-screen">
+      <div className="flex h-full flex-1 flex-col items-center justify-center gap-4">
+        <h1 className="text-xl font-bold">hello world</h1>
+        <p className="text-lg">Total Users: {data}</p>
+      </div>
     </main>
   );
 }
