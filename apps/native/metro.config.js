@@ -1,21 +1,23 @@
-/* eslint-env node */
+// Learn more: https://docs.expo.dev/guides/monorepos/
 const { getDefaultConfig } = require("expo/metro-config");
+const { FileStore } = require("metro-cache");
 const { withNativeWind } = require("nativewind/metro");
-const { wrapWithReanimatedMetroConfig } = require("react-native-reanimated/metro-config");
+const {
+  wrapWithReanimatedMetroConfig,
+} = require("react-native-reanimated/metro-config");
 
-/** @type {import('expo/metro-config').MetroConfig} */
-const config = getDefaultConfig(__dirname);
+const path = require("node:path");
 
-config.transformer.getTransformOptions = async () => ({
-  transform: {
-    // Inline requires are very useful for deferring loading of large dependencies/components.
-    // For example, we use it in app.tsx to conditionally load Reactotron.
-    // However, this comes with some gotchas.
-    // Read more here: https://reactnative.dev/docs/optimizing-javascript-loading
-    // And here: https://github.com/expo/expo/issues/27279#issuecomment-1971610698
-    inlineRequires: true,
-  },
-});
+const config = withTurborepoManagedCache(
+  withNativeWind(wrapWithReanimatedMetroConfig(getDefaultConfig(__dirname)), {
+    input: "./global.css",
+    configPath: "./tailwind.config.ts",
+  }),
+);
+
+// XXX: Resolve our exports in workspace packages
+// https://github.com/expo/expo/issues/26926
+config.resolver.unstable_enablePackageExports = true;
 
 // This helps support certain popular third-party libraries
 // such as Firebase that use the extension cjs.
@@ -24,4 +26,19 @@ config.resolver.sourceExts.push("cjs");
 // Add support for lottie files
 config.resolver.assetExts.push("lottie");
 
-module.exports = withNativeWind(wrapWithReanimatedMetroConfig(config), { input: "./global.css" });
+module.exports = config;
+
+/**
+ * Move the Metro cache to the `.cache/metro` folder.
+ * If you have any environment variables, you can configure Turborepo to invalidate it when needed.
+ *
+ * @see https://turbo.build/repo/docs/reference/configuration#env
+ * @param {import('expo/metro-config').MetroConfig} config
+ * @returns {import('expo/metro-config').MetroConfig}
+ */
+function withTurborepoManagedCache(config) {
+  config.cacheStores = [
+    new FileStore({ root: path.join(__dirname, ".cache/metro") }),
+  ];
+  return config;
+}

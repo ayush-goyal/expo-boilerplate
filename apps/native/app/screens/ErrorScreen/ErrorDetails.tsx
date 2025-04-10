@@ -1,4 +1,3 @@
-import { MaterialIcons } from "@expo/vector-icons";
 import { ErrorInfo } from "react";
 import { ScrollView, View, Text, SafeAreaView, TouchableOpacity } from "react-native";
 import { useThemeColors } from "@/contexts/ThemeContext";
@@ -20,7 +19,6 @@ export function ErrorDetails(props: ErrorDetailsProps) {
   return (
     <SafeAreaView className="flex-1 items-center px-6 pt-8">
       <View className="flex-1 items-center">
-        <MaterialIcons name="bug-report" size={64} color={colors.accent} />
         <Text className="text-lg font-bold mb-4 text-accent">Something went wrong!</Text>
         <Text className="text-text">We're sorry, but something went wrong. Please try again.</Text>
       </View>

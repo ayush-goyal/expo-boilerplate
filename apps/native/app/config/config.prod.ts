@@ -1,3 +1,3 @@
 export default {
-  API_URL: "CHANGEME",
+  API_URL: "https://api.acme.com",
 };

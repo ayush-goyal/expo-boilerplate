@@ -1,13 +1,16 @@
+import { PropsWithChildren, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
 import { QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { createTRPCClient, httpLink, loggerLink } from "@trpc/client";
-import { PropsWithChildren, useState } from "react";
+import SuperJSON from "superjson";
+
+import type { AppRouter } from "@acme/api";
 
 import Config from "@/config";
 import { useAuth } from "@/contexts/AuthContext";
-import { AppRouter, TRPCProvider } from "@/libs/trpc";
+import { TRPCProvider } from "@/libs/trpc";
 
 // Create a new persister instance
 const asyncStoragePersister = createAsyncStoragePersister({
@@ -49,7 +52,7 @@ export const TrpcProvider = (props: PropsWithChildren<{}>) => {
     createTRPCClient<AppRouter>({
       links: [
         httpLink({
-          url: Config.API_URL + "/trpc",
+          url: Config.API_URL + "/api/trpc",
           async headers() {
             if (user?.getIdToken()) {
               return {
@@ -58,13 +61,14 @@ export const TrpcProvider = (props: PropsWithChildren<{}>) => {
             }
             return {};
           },
+          transformer: SuperJSON,
         }),
         loggerLink({
           enabled: () => __DEV__,
           colorMode: "ansi",
         }),
       ],
-    })
+    }),
   );
 
   return (

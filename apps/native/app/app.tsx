@@ -1,7 +1,3 @@
-import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native";
-import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
-import { PostHogProvider } from "posthog-react-native";
 import React, { useEffect, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
@@ -11,21 +7,41 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import {
+  DarkTheme,
+  DefaultTheme,
+  NavigationContainer,
+} from "@react-navigation/native";
+import { PostHogProvider } from "posthog-react-native";
 
 import Config from "./config";
 import { initI18n } from "./i18n";
-import { AppNavigator, navigationRef, useNavigationPersistence } from "./navigators";
+import {
+  AppNavigator,
+  navigationRef,
+  useNavigationPersistence,
+} from "./navigators";
 import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary";
 import { loadDateFnsLocale } from "./utils/formatDate";
+
 import "../global.css";
+
 import { AuthProvider } from "./contexts/AuthContext";
-import { RevenueCatProvider, useRevenueCat } from "./contexts/RevenueCatContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
+import {
+  RevenueCatProvider,
+  useRevenueCat,
+} from "./contexts/RevenueCatContext";
 import { TrpcProvider } from "./contexts/TRPCContext";
 import { useToastConfig } from "./hooks/useToastConfig";
+
 import "./libs/firebase-app-check";
-import { ThemeProvider } from "./contexts/ThemeContext";
+
 import { useColorScheme } from "react-native";
+
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE";
 SplashScreen.preventAutoHideAsync();
@@ -83,7 +99,7 @@ const AppWrapper = ({ children }: { children: React.ReactNode }) => {
       onStateChange={onNavigationStateChange}
     >
       <PostHogProvider
-        apiKey={process.env.EXPO_PUBLIC_POSTHOG_API_KEY ?? " "}
+        apiKey={process.env.EXPO_PUBLIC_POSTHOG_API_KEY ?? "empty"}
         options={{
           host: "https://us.i.posthog.com",
           disabled: __DEV__,
