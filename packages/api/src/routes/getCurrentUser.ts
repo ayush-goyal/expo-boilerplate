@@ -5,7 +5,7 @@ import { protectedProcedure } from "../trpc";
 const getCurrentUser = protectedProcedure.query(async ({ ctx }) => {
   const user = await db.user.findUnique({
     where: {
-      id: ctx.session.uid,
+      id: ctx.user.uid,
     },
   });
 

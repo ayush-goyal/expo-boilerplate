@@ -7,12 +7,8 @@
  * need to use are documented accordingly near the end.
  */
 import { initTRPC, TRPCError } from "@trpc/server";
-import { FetchCreateContextFn } from "@trpc/server/adapters/fetch";
-import {
-  CreateNextContextOptions,
-  NextApiRequest,
-} from "@trpc/server/adapters/next";
 import { DecodedIdToken, getAuth } from "firebase-admin/auth";
+import { type NextRequest } from "next/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
@@ -28,15 +24,20 @@ import { ZodError } from "zod";
  *
  * @see https://trpc.io/docs/server/context
  */
-// TODO: fix this
-export const createTRPCContext = async ({ headers }: { headers: any }) => {
+export const createTRPCContext = async (req: NextRequest) => {
   let decodedIdToken: DecodedIdToken | null = null;
 
   try {
-    if (headers?.authorization?.startsWith("Bearer ")) {
-      const idToken = headers.authorization.split("Bearer ")[1];
+    const authHeader = req.headers.get("Authorization");
+    if (authHeader?.startsWith("Bearer ")) {
+      const idToken = authHeader.split("Bearer ")[1];
       if (idToken) {
         decodedIdToken = await getAuth().verifyIdToken(idToken);
+      }
+    } else {
+      const sessionCookie = req.cookies.get("session");
+      if (sessionCookie) {
+        decodedIdToken = await getAuth().verifySessionCookie(sessionCookie.value);
       }
     }
   } catch (err) {
@@ -46,7 +47,7 @@ export const createTRPCContext = async ({ headers }: { headers: any }) => {
     });
   }
   return {
-    session: decodedIdToken,
+    user: decodedIdToken,
   };
 };
 
@@ -59,7 +60,7 @@ export type Context = Awaited<ReturnType<typeof createTRPCContext>>;
  * ZodErrors so that you get typesafety on the frontend if your procedure fails due to validation
  * errors on the backend.
  */
-const t = initTRPC.context<typeof createTRPCContext>().create({
+const t = initTRPC.context<Context>().create({
   transformer: superjson,
   errorFormatter({ shape, error }) {
     return {
@@ -110,14 +111,14 @@ export const publicProcedure = t.procedure;
  * It will throw a UNAUTHORIZED error if the user is not authenticated.
  */
 export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
-  if (!ctx.session?.uid) {
+  if (!ctx.user?.uid) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
 
   return next({
     ctx: {
       ...ctx,
-      session: ctx.session,
+      user: ctx.user,
     },
   });
 });
