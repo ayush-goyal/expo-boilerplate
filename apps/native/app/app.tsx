@@ -99,7 +99,7 @@ const AppWrapper = ({ children }: { children: React.ReactNode }) => {
       onStateChange={onNavigationStateChange}
     >
       <PostHogProvider
-        apiKey={process.env.EXPO_PUBLIC_POSTHOG_API_KEY ?? "empty"}
+        apiKey={Config.POSTHOG_API_KEY}
         options={{
           host: "https://us.i.posthog.com",
           disabled: __DEV__,

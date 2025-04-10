@@ -4,8 +4,9 @@ import { Platform } from "react-native";
 import Purchases, { CustomerInfo, PurchasesPackage } from "react-native-purchases";
 
 import { useAuth } from "./AuthContext";
+import Config from "@/config";
 
-const IS_REVENUE_CAT_ENABLED = !!process.env.EXPO_PUBLIC_REVENUE_CAT_API_KEY;
+const IS_REVENUE_CAT_ENABLED = !!Config.REVENUE_CAT_API_KEY;
 
 type RevenueCatContextType = {
   customerInfo: CustomerInfo | null;
@@ -46,7 +47,7 @@ export function RevenueCatProvider({ children }: { children: React.ReactNode }) 
 
   const initializeRevenueCat = async () => {
     try {
-      const apiKey = process.env.EXPO_PUBLIC_REVENUE_CAT_API_KEY;
+      const apiKey = Config.REVENUE_CAT_API_KEY;
 
       if (!apiKey) {
         console.warn("RevenueCat API key not set, skipping initialization");
