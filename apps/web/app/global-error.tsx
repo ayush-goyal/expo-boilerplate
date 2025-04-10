@@ -13,7 +13,7 @@ export default function GlobalError({ error }: { error: Error }) {
   }, [error]);
 
   return (
-    <html>
+    <html lang="en">
       <head />
       <body>
         <ThemeProvider attribute="class">

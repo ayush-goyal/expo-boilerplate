@@ -32,6 +32,7 @@ const config = {
     "**/.eslintrc.cjs",
     ".next",
     "dist",
+    "generated",
     "pnpm-lock.yaml",
   ],
   reportUnusedDisableDirectives: true,
