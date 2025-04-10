@@ -11,17 +11,12 @@ export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url().optional(),
     DATABASE_DIRECT_URL: z.string().url().optional(),
-    GOOGLE_CLIENT_ID: z.string().optional(),
-    GOOGLE_CLIENT_SECRET: z.string().optional(),
-    RESEND_API_KEY: z.string().optional(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
     SENTRY_AUTH_TOKEN: z.string().optional(),
     SENTRY_ORG: z.string().optional(),
     SENTRY_PROJECT: z.string().optional(),
-    STRIPE_SECRET_KEY: z.string().optional(),
-    STRIPE_WEBHOOK_SECRET: z.string().optional(),
   },
 
   /**
@@ -33,7 +28,6 @@ export const env = createEnv({
     NEXT_PUBLIC_SENTRY_DSN: z.string().url().optional(),
     NEXT_PUBLIC_POSTHOG_KEY: z.string().optional(),
     NEXT_PUBLIC_POSTHOG_HOST: z.string().url().optional(),
-    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().optional(),
   },
 
   /**
@@ -43,9 +37,6 @@ export const env = createEnv({
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
     DATABASE_DIRECT_URL: process.env.DATABASE_DIRECT_URL,
-    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
-    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
-    RESEND_API_KEY: process.env.RESEND_API_KEY,
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
     SENTRY_ORG: process.env.SENTRY_ORG,
@@ -53,10 +44,6 @@ export const env = createEnv({
     SENTRY_AUTH_TOKEN: process.env.SENTRY_AUTH_TOKEN,
     NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
     NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
-    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:
-      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
-    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
-    STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
