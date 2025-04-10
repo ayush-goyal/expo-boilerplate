@@ -30,7 +30,7 @@ const config = {
     "^[./]",
   ],
   importOrderParserPlugins: ["typescript", "jsx", "decorators-legacy"],
-  importOrderTypeScriptVersion: "4.4.0",
+  importOrderTypeScriptVersion: "5.8.2",
   overrides: [
     {
       files: "*.json.hbs",
@@ -45,6 +45,10 @@ const config = {
       },
     },
   ],
+  trailingComma: "es5",
+  tabWidth: 2,
+  semi: true,
+  printWidth: 100,
 };
 
 export default config;

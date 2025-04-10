@@ -32,6 +32,16 @@
     "web": "expo start --web"
   },
   "prettier": "@acme/prettier-config",
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@acme/eslint-config/base",
+      "@acme/eslint-config/react"
+    ],
+    "ignorePatterns": [
+      "expo-plugins/**"
+    ]
+  },
   "dependencies": {
     "@expo-google-fonts/space-grotesk": "^0.2.2",
     "@expo/metro-config": "^0.19.12",
