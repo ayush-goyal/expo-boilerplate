@@ -22,12 +22,16 @@
     "@trpc/client": "catalog:",
     "@trpc/server": "catalog:",
     "@trpc/tanstack-react-query": "catalog:",
+    "clsx": "^2.1.1",
     "next": "^15.2.3",
     "next-themes": "^0.4.6",
     "posthog-js": "^1.235.0",
+    "posthog-node": "^4.11.3",
     "react": "catalog:",
     "react-dom": "catalog:",
+    "server-only": "^0.0.1",
     "superjson": "catalog:",
+    "tailwind-merge": "^3.2.0",
     "zod": "catalog:"
   },
   "devDependencies": {
