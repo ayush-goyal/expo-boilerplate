@@ -68,7 +68,7 @@ export const TrpcProvider = (props: PropsWithChildren<{}>) => {
           colorMode: "ansi",
         }),
       ],
-    }),
+    })
   );
 
   return (

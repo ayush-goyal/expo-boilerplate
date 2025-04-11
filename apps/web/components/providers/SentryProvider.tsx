@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
-import { authClient } from "@/lib/auth-client";
 import * as Sentry from "@sentry/nextjs";
+
+import { authClient } from "@/lib/auth-client";
 
 interface SentryProviderProps {
   children: React.ReactNode;

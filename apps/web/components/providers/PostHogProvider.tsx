@@ -1,10 +1,11 @@
 "use client";
 
-import { env } from "@/env";
+import { Suspense, useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import posthog from "posthog-js";
 import { PostHogProvider as PHProvider, usePostHog } from "posthog-js/react";
-import { Suspense, useEffect } from "react";
+
+import { env } from "@/env";
 
 function InnerPostHogPageView() {
   const pathname = usePathname();

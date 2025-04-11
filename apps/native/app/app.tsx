@@ -9,20 +9,12 @@ import {
 import Toast from "react-native-toast-message";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import {
-  DarkTheme,
-  DefaultTheme,
-  NavigationContainer,
-} from "@react-navigation/native";
+import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { PostHogProvider } from "posthog-react-native";
 
 import Config from "./config";
 import { initI18n } from "./i18n";
-import {
-  AppNavigator,
-  navigationRef,
-  useNavigationPersistence,
-} from "./navigators";
+import { AppNavigator, navigationRef, useNavigationPersistence } from "./navigators";
 import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary";
 import { loadDateFnsLocale } from "./utils/formatDate";
 
@@ -30,10 +22,7 @@ import "../global.css";
 
 import { AuthProvider } from "./contexts/AuthContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
-import {
-  RevenueCatProvider,
-  useRevenueCat,
-} from "./contexts/RevenueCatContext";
+import { RevenueCatProvider, useRevenueCat } from "./contexts/RevenueCatContext";
 import { TrpcProvider } from "./contexts/TRPCContext";
 import { useToastConfig } from "./hooks/useToastConfig";
 

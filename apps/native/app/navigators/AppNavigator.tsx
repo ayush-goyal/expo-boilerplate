@@ -1,19 +1,18 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-import * as Screens from "@/screens";
+import { useMemo } from "react";
+import { Pressable } from "react-native";
+import * as Haptics from "expo-haptics";
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
 } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { House } from "lucide-react-native";
 
+import { useThemeColors } from "@/contexts/ThemeContext";
+import * as Screens from "@/screens";
 import Config from "../config";
 import { HomeTabStackParamList, MainTabsParamList, RootStackParamList } from "./NavigationTypes";
 import { useBackButtonHandler } from "./navigationUtilities";
-import { useMemo } from "react";
-import { Pressable } from "react-native";
-import * as Haptics from "expo-haptics";
-import { useThemeColors } from "@/contexts/ThemeContext";
 
 const HomeTabStack = createNativeStackNavigator<HomeTabStackParamList>();
 const HomeTabStackNavigator = () => {

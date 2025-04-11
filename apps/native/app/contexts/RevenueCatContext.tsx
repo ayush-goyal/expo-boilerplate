@@ -1,10 +1,10 @@
-import { useAppState } from "@react-native-community/hooks";
 import { createContext, useContext, useEffect, useState } from "react";
 import { Platform } from "react-native";
 import Purchases, { CustomerInfo, PurchasesPackage } from "react-native-purchases";
+import { useAppState } from "@react-native-community/hooks";
 
-import { useAuth } from "./AuthContext";
 import Config from "@/config";
+import { useAuth } from "./AuthContext";
 
 const IS_REVENUE_CAT_ENABLED = !!Config.REVENUE_CAT_API_KEY;
 

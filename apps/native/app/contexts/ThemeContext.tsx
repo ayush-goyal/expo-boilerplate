@@ -1,6 +1,7 @@
-import { themeColors, themeColorsTailwind } from "@/libs/colors";
 import React, { createContext, useContext } from "react";
 import { View } from "react-native";
+
+import { themeColors, themeColorsTailwind } from "@/libs/colors";
 
 interface ThemeProviderProps {
   children: React.ReactNode;

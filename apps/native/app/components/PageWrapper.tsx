@@ -13,7 +13,7 @@ const PageWrapper = ({ children, className, fullScreen = false }: PageWrapperPro
   const insets = useSafeAreaInsets();
   return (
     <View
-      className={cn("flex-1 flex", className)}
+      className={cn("flex flex-1", className)}
       style={[
         {
           paddingBottom: insets.bottom + 8,

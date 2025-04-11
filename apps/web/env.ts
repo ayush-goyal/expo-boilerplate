@@ -11,9 +11,7 @@ export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url().optional(),
     DATABASE_DIRECT_URL: z.string().url().optional(),
-    NODE_ENV: z
-      .enum(["development", "test", "production"])
-      .default("development"),
+    NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
     SENTRY_AUTH_TOKEN: z.string().optional(),
     SENTRY_ORG: z.string().optional(),
     SENTRY_PROJECT: z.string().optional(),

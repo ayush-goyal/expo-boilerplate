@@ -1,14 +1,14 @@
-import { useAppState } from "@react-native-community/hooks";
-import { getMessaging } from "@react-native-firebase/messaging";
-import { useMutation } from "@tanstack/react-query";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { Platform } from "react-native";
 import {
   checkNotifications,
+  PermissionStatus,
   requestNotifications,
   RESULTS,
-  PermissionStatus,
 } from "react-native-permissions";
+import { useAppState } from "@react-native-community/hooks";
+import { getMessaging } from "@react-native-firebase/messaging";
+import { useMutation } from "@tanstack/react-query";
 
 const messaging = getMessaging();
 

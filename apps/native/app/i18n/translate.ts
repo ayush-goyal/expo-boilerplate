@@ -1,5 +1,5 @@
-import i18n from "i18next";
 import type { TOptions } from "i18next";
+import i18n from "i18next";
 
 import { TxKeyPath } from "./i18n";
 

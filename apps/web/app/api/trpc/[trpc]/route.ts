@@ -1,7 +1,9 @@
+import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import { type NextRequest } from "next/server";
-import { fetchRequestHandler, type FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
+import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
 import { appRouter, createTRPCContext } from "@acme/api";
+
 import { env } from "@/env";
 
 const handler = (req: NextRequest) =>
@@ -14,9 +16,7 @@ const handler = (req: NextRequest) =>
     onError:
       env.NODE_ENV === "development"
         ? ({ path, error }) => {
-            console.error(
-              `❌ tRPC failed on ${path ?? "<no-path>"}: ${error.message}`
-            );
+            console.error(`❌ tRPC failed on ${path ?? "<no-path>"}: ${error.message}`);
           }
         : undefined,
   });

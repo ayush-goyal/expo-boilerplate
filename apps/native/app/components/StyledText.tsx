@@ -1,4 +1,4 @@
-import { TextProps, Text } from "react-native";
+import { Text, TextProps } from "react-native";
 
 const DEFAULT_FONT_FAMILY = "SpaceGrotesk";
 

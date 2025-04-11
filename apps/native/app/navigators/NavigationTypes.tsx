@@ -1,3 +1,4 @@
+import { ComponentProps } from "react";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import {
   CompositeScreenProps,
@@ -5,7 +6,6 @@ import {
   NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ComponentProps } from "react";
 
 export type RootStackParamList = {
   MainTabs: NavigatorScreenParams<MainTabsParamList>;

@@ -1,5 +1,5 @@
+import { useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import { useState, useEffect } from "react";
 
 /**
  * Refetch the data when the screen is focused. From https://github.com/TanStack/query/discussions/296#discussioncomment-1244793

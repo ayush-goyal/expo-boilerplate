@@ -1,12 +1,15 @@
 import { withSentryConfig } from "@sentry/nextjs";
+
 /**
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful
  * for Docker builds.
  */
 import "./env";
-import { env } from "./env";
+
 import { fileURLToPath } from "url";
 import createJiti from "jiti";
+
+import { env } from "./env";
 
 // Import env files to validate at build time. Use jiti so we can load .ts files in here.
 createJiti(fileURLToPath(import.meta.url))("./env");

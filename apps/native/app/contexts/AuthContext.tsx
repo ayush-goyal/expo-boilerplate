@@ -1,8 +1,8 @@
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import Purchases from "react-native-purchases";
 import { FirebaseAuthTypes, getAuth, PhoneAuthProvider } from "@react-native-firebase/auth";
 import { getMessaging } from "@react-native-firebase/messaging";
 import { usePostHog } from "posthog-react-native";
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import Purchases from "react-native-purchases";
 
 import { useAppStore } from "@/libs/stores/app-store";
 

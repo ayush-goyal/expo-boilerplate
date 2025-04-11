@@ -2,9 +2,7 @@
 const { getDefaultConfig } = require("expo/metro-config");
 const { FileStore } = require("metro-cache");
 const { withNativeWind } = require("nativewind/metro");
-const {
-  wrapWithReanimatedMetroConfig,
-} = require("react-native-reanimated/metro-config");
+const { wrapWithReanimatedMetroConfig } = require("react-native-reanimated/metro-config");
 
 const path = require("node:path");
 
@@ -12,7 +10,7 @@ const config = withTurborepoManagedCache(
   withNativeWind(wrapWithReanimatedMetroConfig(getDefaultConfig(__dirname)), {
     input: "./global.css",
     configPath: "./tailwind.config.ts",
-  }),
+  })
 );
 
 // XXX: Resolve our exports in workspace packages
@@ -37,8 +35,6 @@ module.exports = config;
  * @returns {import('expo/metro-config').MetroConfig}
  */
 function withTurborepoManagedCache(config) {
-  config.cacheStores = [
-    new FileStore({ root: path.join(__dirname, ".cache/metro") }),
-  ];
+  config.cacheStores = [new FileStore({ root: path.join(__dirname, ".cache/metro") })];
   return config;
 }

@@ -1,5 +1,6 @@
 import { ErrorInfo } from "react";
-import { ScrollView, View, Text, SafeAreaView, TouchableOpacity } from "react-native";
+import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from "react-native";
+
 import { useThemeColors } from "@/contexts/ThemeContext";
 
 export interface ErrorDetailsProps {
@@ -19,25 +20,25 @@ export function ErrorDetails(props: ErrorDetailsProps) {
   return (
     <SafeAreaView className="flex-1 items-center px-6 pt-8">
       <View className="flex-1 items-center">
-        <Text className="text-lg font-bold mb-4 text-accent">Something went wrong!</Text>
+        <Text className="mb-4 text-lg font-bold text-accent">Something went wrong!</Text>
         <Text className="text-text">We're sorry, but something went wrong. Please try again.</Text>
       </View>
 
       <ScrollView
-        className="flex-2 w-full my-4 rounded-lg bg-background-subtle"
+        className="flex-2 bg-background-subtle my-4 w-full rounded-lg"
         contentContainerClassName="p-4"
       >
         <Text className="font-bold text-accent">{`${props.error}`.trim()}</Text>
-        <Text selectable className="mt-4 text-text-muted">
+        <Text selectable className="text-text-muted mt-4">
           {`${props.errorInfo?.componentStack ?? ""}`.trim()}
         </Text>
       </ScrollView>
 
       <TouchableOpacity
-        className="bg-accent px-12 rounded-lg my-4 self-center"
+        className="my-4 self-center rounded-lg bg-accent px-12"
         onPress={props.onReset}
       >
-        <Text className="text-on-accent font-bold text-center py-2.5">Reset</Text>
+        <Text className="text-on-accent py-2.5 text-center font-bold">Reset</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
