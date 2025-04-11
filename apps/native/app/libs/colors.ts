@@ -29,6 +29,7 @@ export const themeColors = {
   },
 };
 
+// Associated tailwind variables must be set in tailwind.config.ts as well
 export const themeColorsTailwind = {
   light: vars({
     "--color-primary-default": themeColors.light.primary,

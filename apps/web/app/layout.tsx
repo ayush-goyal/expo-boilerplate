@@ -1,11 +1,11 @@
-import "@/styles/globals.css";
-
 import { type Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 
 import { PostHogProvider } from "@/components/providers/PostHogProvider";
 import { SentryProvider } from "@/components/providers/SentryProvider";
 import { TRPCReactProvider } from "@/trpc/react";
+
+import "@/styles/globals.css";
 
 export const metadata: Metadata = {
   title: "Next App",
