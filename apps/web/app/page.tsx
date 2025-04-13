@@ -8,10 +8,10 @@ export default function HomePage() {
   const { data } = useQuery(trpc.getUserCount.queryOptions());
 
   return (
-    <main className="container h-screen">
-      <div className="flex h-full flex-1 flex-col items-center justify-center gap-4">
-        <h1 className="text-xl font-bold">hello world</h1>
-        <p className="text-lg">Total Users: {data}</p>
+    <main className="h-screen">
+      <div className="flex h-full flex-1 flex-col items-center justify-center gap-4 bg-black">
+        <h1 className="text-xl font-bold text-white">hello world</h1>
+        <p className="text-sm text-white">total users: {data}</p>
       </div>
     </main>
   );

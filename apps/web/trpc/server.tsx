@@ -1,3 +1,5 @@
+import "server-only";
+
 import type { TRPCQueryOptions } from "@trpc/tanstack-react-query";
 import { cache } from "react";
 import { headers } from "next/headers";

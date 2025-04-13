@@ -4,6 +4,11 @@ import { z } from "zod";
 
 export const env = createEnv({
   extends: [vercel()],
+  shared: {
+    NODE_ENV: z
+      .enum(["development", "production", "test"])
+      .default("development"),
+  },
   /**
    * Specify your server-side environment variables schema here. This way you can ensure the app
    * isn't built with invalid env vars.
@@ -11,7 +16,6 @@ export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url().optional(),
     DATABASE_DIRECT_URL: z.string().url().optional(),
-    NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
     SENTRY_AUTH_TOKEN: z.string().optional(),
     SENTRY_ORG: z.string().optional(),
     SENTRY_PROJECT: z.string().optional(),
@@ -47,10 +51,6 @@ export const env = createEnv({
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
    * useful for Docker builds.
    */
-  skipValidation: !!process.env.SKIP_ENV_VALIDATION,
-  /**
-   * Makes it so that empty strings are treated as undefined. `SOME_VAR: z.string()` and
-   * `SOME_VAR=''` will throw an error.
-   */
-  emptyStringAsUndefined: true,
+  skipValidation:
+    !!process.env.CI || process.env.npm_lifecycle_event === "lint",
 });
