@@ -165,7 +165,12 @@ export function useNavigationPersistence(persistenceKey: string) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { onNavigationStateChange, restoreState, isRestored, initialNavigationState };
+  return {
+    onNavigationStateChange,
+    restoreState,
+    isRestored,
+    initialNavigationState,
+  };
 }
 
 /**
@@ -200,7 +205,10 @@ export function goBack() {
  * @returns {void}
  */
 export function resetRoot(
-  state: Parameters<typeof navigationRef.resetRoot>[0] = { index: 0, routes: [] }
+  state: Parameters<typeof navigationRef.resetRoot>[0] = {
+    index: 0,
+    routes: [],
+  }
 ) {
   if (navigationRef.isReady()) {
     navigationRef.resetRoot(state);

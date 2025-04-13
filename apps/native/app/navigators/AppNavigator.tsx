@@ -100,6 +100,10 @@ export const AppNavigator = () => {
       }}
     >
       <RootStack.Screen name="MainTabs" component={MainTabsNavigator} />
+      <RootStack.Group screenOptions={{ presentation: "modal" }}>
+        <RootStack.Screen name="PhoneNumberInput" component={Screens.PhoneNumberInputScreen} />
+        <RootStack.Screen name="VerifyCode" component={Screens.VerifyCodeScreen} />
+      </RootStack.Group>
     </RootStack.Navigator>
   );
 };

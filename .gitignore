@@ -52,3 +52,4 @@ generated/
 .turbo
 
 GoogleService-Info.plist
+google-service-account-file.json
