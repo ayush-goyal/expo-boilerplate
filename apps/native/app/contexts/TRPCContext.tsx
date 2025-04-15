@@ -1,5 +1,6 @@
 import { PropsWithChildren, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getAuth } from "@react-native-firebase/auth";
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
 import { QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
@@ -9,7 +10,6 @@ import SuperJSON from "superjson";
 import type { AppRouter } from "@acme/api";
 
 import Config from "@/config";
-import { useAuth } from "@/contexts/AuthContext";
 import { TRPCProvider } from "@/libs/trpc";
 
 // Create a new persister instance
@@ -36,38 +36,34 @@ const queryClient = new QueryClient({
   },
 });
 
+const getAuthorizationToken = async () => {
+  const user = getAuth().currentUser;
+  if (!user) {
+    return undefined;
+  }
+  const firebaseToken = await user.getIdToken();
+  return `Bearer ${firebaseToken}`;
+};
+
+const trpcClient = createTRPCClient<AppRouter>({
+  links: [
+    httpLink({
+      url: Config.API_URL + "/api/trpc",
+      async headers() {
+        return {
+          Authorization: await getAuthorizationToken(),
+        };
+      },
+      transformer: SuperJSON,
+    }),
+    loggerLink({
+      enabled: () => __DEV__,
+      colorMode: "ansi",
+    }),
+  ],
+});
+
 export const TrpcProvider = (props: PropsWithChildren<{}>) => {
-  const { user } = useAuth();
-
-  const getAuthorizationToken = async () => {
-    if (!user) {
-      return undefined;
-    }
-    const firebaseToken = await user.getIdToken();
-    return `Bearer ${firebaseToken}`;
-  };
-
-  // Create the tRPC client
-  const [trpcClient] = useState(() =>
-    createTRPCClient<AppRouter>({
-      links: [
-        httpLink({
-          url: Config.API_URL + "/api/trpc",
-          async headers() {
-            return {
-              Authorization: await getAuthorizationToken(),
-            };
-          },
-          transformer: SuperJSON,
-        }),
-        loggerLink({
-          enabled: () => __DEV__,
-          colorMode: "ansi",
-        }),
-      ],
-    })
-  );
-
   return (
     <PersistQueryClientProvider
       client={queryClient}
