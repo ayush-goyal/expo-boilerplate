@@ -54,12 +54,9 @@ export const TrpcProvider = (props: PropsWithChildren<{}>) => {
         httpLink({
           url: Config.API_URL + "/api/trpc",
           async headers() {
-            if (user?.getIdToken()) {
-              return {
-                Authorization: await getAuthorizationToken(),
-              };
-            }
-            return {};
+            return {
+              Authorization: await getAuthorizationToken(),
+            };
           },
           transformer: SuperJSON,
         }),
