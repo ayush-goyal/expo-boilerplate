@@ -5,7 +5,6 @@
 /** @type { PrettierConfig | SortImportsConfig | TailwindConfig } */
 const config = {
   plugins: ["@ianvs/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
-  tailwindConfig: "../../tooling/tailwind/web.ts",
   tailwindFunctions: ["cn", "cva"],
   importOrder: [
     "<TYPES>",
