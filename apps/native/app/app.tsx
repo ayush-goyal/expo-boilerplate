@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import {
@@ -8,32 +9,50 @@ import {
 } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import { useFonts } from "expo-font";
+import * as Linking from "expo-linking";
 import * as SplashScreen from "expo-splash-screen";
-import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native";
+import {
+  DarkTheme,
+  DefaultTheme,
+  LinkingOptions,
+  NavigationContainer,
+} from "@react-navigation/native";
 import { PostHogProvider } from "posthog-react-native";
 
 import Config from "./config";
-import { initI18n } from "./i18n";
-import { AppNavigator, navigationRef, useNavigationPersistence } from "./navigators";
-import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary";
-import { loadDateFnsLocale } from "./utils/formatDate";
-
-import "../global.css";
-
 import { AuthProvider } from "./contexts/AuthContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import { RevenueCatProvider, useRevenueCat } from "./contexts/RevenueCatContext";
 import { TrpcProvider } from "./contexts/TRPCContext";
 import { useToastConfig } from "./hooks/useToastConfig";
+import { initI18n } from "./i18n";
+import {
+  AppNavigator,
+  navigationRef,
+  RootStackParamList,
+  useNavigationPersistence,
+} from "./navigators";
+import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary";
+import { loadDateFnsLocale } from "./utils/formatDate";
 
 import "./libs/firebase-app-check";
 
-import { useColorScheme } from "react-native";
-
 import { ThemeProvider } from "./contexts/ThemeContext";
+
+import "../global.css";
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE";
 SplashScreen.preventAutoHideAsync();
+
+const linking: LinkingOptions<RootStackParamList> = {
+  // TODO: Change this to your own domain
+  prefixes: [Linking.createURL("/"), "https://expoboilerplate.com"],
+  config: {
+    screens: {
+      // TODO: Add screens for deep linking here
+    },
+  },
+};
 
 const AppWrapper = ({ children }: { children: React.ReactNode }) => {
   const {
