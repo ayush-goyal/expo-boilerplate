@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { Platform } from "react-native";
+import { Alert, Linking, Platform } from "react-native";
 import {
   checkNotifications,
   PermissionStatus,
@@ -50,6 +50,20 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
     })();
   }, [appState]);
 
+  const showSettingsAlert = useCallback(() => {
+    Alert.alert(
+      "Allow notifications",
+      "Please enable notifications in your device settings to receive alerts.",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        { text: "Settings", onPress: () => Linking.openSettings(), isPreferred: true },
+      ]
+    );
+  }, []);
+
   const requestPermission = useCallback(async () => {
     try {
       const { status } = await checkNotifications();
@@ -57,9 +71,11 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
       if (status === RESULTS.DENIED) {
         const { status: newStatus } = await requestNotifications(["alert", "sound", "badge"]);
         if (newStatus !== RESULTS.GRANTED) {
+          showSettingsAlert();
           return false;
         }
       } else if (status !== RESULTS.GRANTED) {
+        showSettingsAlert();
         return false;
       }
 
@@ -74,7 +90,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
       console.error("Error requesting notification permission:", error);
       return false;
     }
-  }, [syncDeviceTokenToServer]);
+  }, [syncDeviceTokenToServer, showSettingsAlert]);
 
   useEffect(() => {
     const unsubscribe = messaging.onTokenRefresh((newToken) => {
@@ -101,7 +117,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
       unsubscribe();
       foregroundSubscription();
     };
-  }, [requestPermission, syncDeviceTokenToServer]);
+  }, [syncDeviceTokenToServer]);
 
   useEffect(() => {
     (async () => {
