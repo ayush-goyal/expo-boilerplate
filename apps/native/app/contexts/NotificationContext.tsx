@@ -10,6 +10,8 @@ import { useAppState } from "@react-native-community/hooks";
 import { getMessaging } from "@react-native-firebase/messaging";
 import { useMutation } from "@tanstack/react-query";
 
+import { useTRPC } from "@/libs/trpc";
+
 const messaging = getMessaging();
 
 type NotificationContextType = {
@@ -24,8 +26,8 @@ const NotificationContext = createContext<NotificationContextType | undefined>(u
 export function NotificationProvider({ children }: { children: React.ReactNode }) {
   const appState = useAppState();
   const [token, setToken] = useState<string | null>(null);
-  // TODO: Setup create device mutation
-  const { mutate: createDeviceMutation }: any = useMutation({});
+  const trpc = useTRPC();
+  const { mutateAsync: createDeviceMutation } = useMutation(trpc.createDevice.mutationOptions());
   const [notificationPermission, setNotificationPermission] = useState<PermissionStatus>(
     RESULTS.DENIED
   );
@@ -34,7 +36,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
     try {
       const fcmToken = await messaging.getToken();
       console.log("FCM token:", fcmToken);
-      await createDeviceMutation.mutateAsync({
+      await createDeviceMutation({
         fcmToken,
         platform: Platform.OS === "ios" ? "IOS" : "ANDROID",
       });

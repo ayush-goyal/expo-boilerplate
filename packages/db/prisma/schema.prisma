@@ -12,3 +12,19 @@ datasource db {
 model User {
   id        String   @id @default(uuid())
 }
+
+enum DevicePlatform {
+  IOS
+  ANDROID
+}
+
+model Device {
+  userId    String
+  fcmToken  String
+  platform  DevicePlatform
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@id([userId, fcmToken])
+  @@map("devices")
+}
