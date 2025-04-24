@@ -12,8 +12,8 @@ A modern, feature-rich monorepo boilerplate for building mobile and web applicat
 - **Database:** [Prisma](https://www.prisma.io/) with Supabase/Postgres.
 - **Authentication:** [NextAuth.js](https://next-auth.js.org/) (setup required for full Expo integration).
 - **Navigation:**
-    - Mobile: [React Navigation](https://reactnavigation.org/)
-    - Web: Next.js App Router
+  - Mobile: [React Navigation](https://reactnavigation.org/)
+  - Web: Next.js App Router
 - **State Management:** [Zustand](https://zustand-demo.pmnd.rs/) and [React Query](https://tanstack.com/query/latest).
 - **Internationalization:** [i18next](https://www.i18next.com/).
 - **Additional Features:** RevenueCat, Toast notifications, PostHog analytics.
@@ -66,7 +66,11 @@ A modern, feature-rich monorepo boilerplate for building mobile and web applicat
     pnpm install
     ```
 
-2.  **Configure Environment Variables:**
+2.  **Setup Firebase Account**
+
+    Setup a Firebase project and download the `GoogleService-Info.plist` file for iOS/Android and the `google-service-account-file.json` file for your backend server.
+
+3.  **Configure Environment Variables:**
 
     ```bash
     # Copy the example environment file
@@ -75,12 +79,15 @@ A modern, feature-rich monorepo boilerplate for building mobile and web applicat
     # Update .env with your specific keys and secrets
     ```
 
-3.  **Configure App Settings:**
+    Update the `GOOGLE_APPLICATION_CREDENTIALS` environment variable with the path to your `google-service-account-file.json` file.
+
+4.  **Configure App Settings:**
+
     - Update app name, slug, identifiers in `apps/native/app.json`.
     - Update Firebase config (`GoogleService-Info.plist`) in `apps/native/ios/` and potentially Android equivalents.
     - Review and update API URLs or other settings in `apps/native/src/config/` files if necessary (though prefer environment variables).
 
-4.  **Database Setup:**
+5.  **Database Setup:**
 
     ```bash
     # Push the Prisma schema to your database
@@ -141,8 +148,11 @@ Deploy the Next.js application to a hosting provider like [Vercel](https://verce
 
 1.  Connect your Git repository to Vercel.
 2.  When importing the project, set the **Root Directory** to `apps/web`. Vercel should automatically detect Next.js and configure the build settings.
-3.  Add your production environment variables (like `DATABASE_URL`, `AUTH_SECRET`, etc.) in the Vercel project settings.
-4.  Deploy! Vercel handles the build process using Turborepo's remote caching if configured.
+3.  Add your production environment variables (like `DATABASE_URL`, `AUTH_SECRET`, `GOOGLE_APPLICATION_CREDENTIALS`, etc.) in the Vercel project settings.
+4.  For Google service account integration, you'll need to either:
+    - Upload the service account file directly to your deployment platform and set the path, or
+    - Store the JSON content as an environment variable and dynamically write it to a file during build/runtime.
+5.  Deploy! Vercel handles the build process using Turborepo's remote caching if configured.
 
 > **Note:** The deployed web application often serves as the backend API (tRPC) for the native app in production. Ensure the native app's configuration points to the correct production URL.
 
