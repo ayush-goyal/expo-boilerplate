@@ -2,6 +2,7 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useS
 import Purchases from "react-native-purchases";
 import { FirebaseAuthTypes, getAuth, PhoneAuthProvider } from "@react-native-firebase/auth";
 import { getMessaging } from "@react-native-firebase/messaging";
+import { useQueryClient } from "@tanstack/react-query";
 import { usePostHog } from "posthog-react-native";
 
 import { useAppStore } from "@/libs/stores/app-store";
@@ -35,7 +36,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const posthog = usePostHog();
   const resetAppStore = useAppStore((state) => state.reset);
-
+  const queryClient = useQueryClient();
   const clearAllStores = useCallback(() => {
     resetAppStore();
   }, [resetAppStore]);
@@ -112,6 +113,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       await messaging.deleteToken();
       posthog.reset();
 
+      // Clear the react-query cache
+      queryClient.clear();
+
       // Clear all stores after successful sign out
       clearAllStores();
       try {
@@ -123,7 +127,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       console.error("Error signing out:", error);
       throw error;
     }
-  }, [clearAllStores, posthog]);
+  }, [clearAllStores, posthog, queryClient]);
 
   const value = useMemo(
     () => ({
