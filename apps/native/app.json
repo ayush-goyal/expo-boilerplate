@@ -24,7 +24,8 @@
       "supportsTablet": false,
       "infoPlist": {
         "UIBackgroundModes": ["remote-notification", "processing"],
-        "BGTaskSchedulerPermittedIdentifiers": ["com.expoboilerplate"]
+        "BGTaskSchedulerPermittedIdentifiers": ["com.expoboilerplate"],
+        "ITSAppUsesNonExemptEncryption": false
       },
       "entitlements": {
         "aps-environment": "production"
