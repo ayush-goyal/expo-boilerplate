@@ -2,7 +2,7 @@ import { PropsWithChildren, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAuth } from "@react-native-firebase/auth";
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
-import { QueryClient } from "@tanstack/react-query";
+import { defaultShouldDehydrateQuery, QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { createTRPCClient, httpLink, loggerLink } from "@trpc/client";
 import SuperJSON from "superjson";
@@ -32,6 +32,13 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: true,
       // Refetch on reconnect
       refetchOnReconnect: true,
+    },
+    dehydrate: {
+      serializeData: SuperJSON.serialize,
+      shouldDehydrateQuery: (query) => defaultShouldDehydrateQuery(query),
+    },
+    hydrate: {
+      deserializeData: SuperJSON.deserialize,
     },
   },
 });
