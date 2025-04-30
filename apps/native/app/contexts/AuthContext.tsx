@@ -114,6 +114,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       posthog.reset();
 
       // Clear the react-query cache
+      await queryClient.cancelQueries();
       queryClient.clear();
 
       // Clear all stores after successful sign out
