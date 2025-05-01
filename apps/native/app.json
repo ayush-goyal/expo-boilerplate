@@ -62,6 +62,14 @@
             "useFrameworks": "static"
           }
         }
+      ],
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "project": "expo-boilerplate",
+          "organization": "acme"
+        }
       ]
     ],
     "experiments": {

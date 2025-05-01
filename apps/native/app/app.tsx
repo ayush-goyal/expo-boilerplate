@@ -17,6 +17,7 @@ import {
   LinkingOptions,
   NavigationContainer,
 } from "@react-navigation/native";
+import * as Sentry from "@sentry/react-native";
 import { PostHogProvider } from "posthog-react-native";
 
 import Config from "./config";
@@ -40,6 +41,15 @@ import "./libs/firebase-app-check";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
 import "../global.css";
+
+Sentry.init({
+  dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
+  tracesSampleRate: 1.0,
+  // profilesSampleRate is relative to tracesSampleRate.
+  // Here, we'll capture profiles for 100% of transactions.
+  profilesSampleRate: 1.0,
+  enabled: !__DEV__,
+});
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE";
 SplashScreen.preventAutoHideAsync();
@@ -127,7 +137,7 @@ const AppWrapper = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export function App() {
+function App() {
   return (
     <ErrorBoundary catchErrors={Config.catchErrors}>
       <ThemeProvider>
@@ -152,3 +162,5 @@ export function App() {
     </ErrorBoundary>
   );
 }
+
+export default Sentry.wrap(App);

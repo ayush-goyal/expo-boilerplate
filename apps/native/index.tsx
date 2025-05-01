@@ -1,4 +1,4 @@
-import { App } from "./app/app";
+import App from "./app/app";
 
 import "@expo/metro-runtime"; // this is for fast refresh on web w/o expo-router
 

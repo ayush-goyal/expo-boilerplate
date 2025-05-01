@@ -50,6 +50,7 @@
     "@react-navigation/native-stack": "^7.2.0",
     "@react-navigation/stack": "^7.2.10",
     "@rneui/themed": "^4.0.0-rc.8",
+    "@sentry/react-native": "^6.13.0",
     "@shopify/flash-list": "1.7.3",
     "@tanstack/query-async-storage-persister": "^5.71.10",
     "@tanstack/react-query": "catalog:",
