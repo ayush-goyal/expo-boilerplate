@@ -22,7 +22,6 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = () => {
   });
   const themeColors = useThemeColors();
 
-
   const handleSignInPress = () => {
     navigation.navigate("PhoneNumberInput");
   };
@@ -33,8 +32,11 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = () => {
         <StyledText className="text-2xl font-bold">Hello world</StyledText>
         <StyledText className="text-lg">Total Users: {data}</StyledText>
 
-        <TouchableOpacity className="bg mt-8 rounded-md px-6 py-3 bg-background" onPress={handleSignInPress}>
-          <StyledText className="text-lg font-semibold text-primary-foreground">Sign In</StyledText>
+        <TouchableOpacity
+          className="bg mt-8 rounded-md bg-background px-6 py-3"
+          onPress={handleSignInPress}
+        >
+          <StyledText className="text-primary-foreground text-lg font-semibold">Sign In</StyledText>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

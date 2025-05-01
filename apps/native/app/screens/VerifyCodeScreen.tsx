@@ -99,7 +99,7 @@ export const VerifyCodeScreen = () => {
         className="flex-1"
       >
         <View className="flex-1 items-center justify-center px-6">
-          <Text className="text-text mb-3 text-center text-2xl font-bold">Verification Code</Text>
+          <Text className="mb-3 text-center text-2xl font-bold text-text">Verification Code</Text>
 
           <Text className="text-textMuted mb-8 text-center text-base">
             Enter the 6-digit code sent to {parsePhoneNumber(phoneNumber)?.formatNational()}
@@ -136,7 +136,7 @@ export const VerifyCodeScreen = () => {
                   elevation: isFocused ? 3 : 0,
                 }}
               >
-                <Text className="text-text text-center text-xl" style={{ color: themeColors.text }}>
+                <Text className="text-center text-xl text-text" style={{ color: themeColors.text }}>
                   {symbol || (isFocused ? <Cursor cursorSymbol="|" /> : null)}
                 </Text>
               </View>
@@ -167,14 +167,12 @@ export const VerifyCodeScreen = () => {
           <TouchableOpacity
             className={cn(
               "mb-6 w-full items-center rounded-lg py-4",
-              code.length === VERIFICATION_CODE_LENGTH && !isLoading
-                ? "bg-black"
-                : "bg-gray-500"
+              code.length === VERIFICATION_CODE_LENGTH && !isLoading ? "bg-black" : "bg-gray-500"
             )}
             onPress={handleVerify}
             disabled={code.length !== VERIFICATION_CODE_LENGTH || isLoading}
           >
-            <Text className="text-on-accent text-base font-semibold">
+            <Text className="text-base font-semibold text-on-accent">
               {isLoading ? "Verifying..." : "Verify Code"}
             </Text>
           </TouchableOpacity>

@@ -25,11 +25,11 @@ export function ErrorDetails(props: ErrorDetailsProps) {
       </View>
 
       <ScrollView
-        className="flex-2 bg-background-subtle my-4 w-full rounded-lg"
+        className="flex-2 my-4 w-full rounded-lg bg-background-subtle"
         contentContainerClassName="p-4"
       >
         <Text className="font-bold text-accent">{`${props.error}`.trim()}</Text>
-        <Text selectable className="text-text-muted mt-4">
+        <Text selectable className="mt-4 text-text-muted">
           {`${props.errorInfo?.componentStack ?? ""}`.trim()}
         </Text>
       </ScrollView>
@@ -38,7 +38,7 @@ export function ErrorDetails(props: ErrorDetailsProps) {
         className="my-4 self-center rounded-lg bg-accent px-12"
         onPress={props.onReset}
       >
-        <Text className="text-on-accent py-2.5 text-center font-bold">Reset</Text>
+        <Text className="py-2.5 text-center font-bold text-on-accent">Reset</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
