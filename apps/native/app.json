@@ -20,6 +20,7 @@
     },
     "ios": {
       "bundleIdentifier": "com.expoboilerplate",
+      "appleTeamId": "",
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": false,
       "infoPlist": {

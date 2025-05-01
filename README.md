@@ -83,7 +83,8 @@ A modern, feature-rich monorepo boilerplate for building mobile and web applicat
 
 4.  **Configure App Settings:**
 
-    - Update app name, slug, identifiers in `apps/native/app.json`.
+    - Update your app configuration in `apps/native/app.json` (like name, bundle identifier)
+    - Set up EAS build configuration in `apps/native/eas.json` (like apple app id, apple team id)
     - Update Firebase config (`GoogleService-Info.plist`) in `apps/native/ios/` and potentially Android equivalents.
     - Review and update API URLs or other settings in `apps/native/src/config/` files if necessary (though prefer environment variables).
 
