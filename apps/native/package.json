@@ -11,9 +11,11 @@
     "clean": "git clean -xdf .cache .expo .turbo android ios node_modules",
     "compile": "tsc --noEmit -p . --pretty",
     "dev": "expo start",
-    "format": "prettier --check . --ignore-path ../../.gitignore --ignore-path .prettierignore",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "format:fix": "prettier --write . --ignore-path ../../.gitignore",
     "ios": "expo run:ios",
     "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "patch": "patch-package",
     "prebuild:clean": "npx expo prebuild --clean",
     "serve:web": "npx serve dist",
@@ -33,6 +35,10 @@
     "ignorePatterns": [
       "expo-plugins/**"
     ]
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": "eslint --fix",
+    "*.{js,ts,tsx,json,yml,yaml,css,html,md}": "prettier --write"
   },
   "dependencies": {
     "@expo-google-fonts/space-grotesk": "^0.2.2",
