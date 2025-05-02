@@ -124,7 +124,7 @@ A modern, feature-rich monorepo boilerplate for building mobile and web applicat
     ```bash
     # Push the Prisma schema to your database
     # Ensure your DATABASE_URL is correctly set in .env
-    pnpm db:push --filter @acme/db
+    pnpm --filter @acme/db db:migrate
     ```
 
 ## Development
@@ -137,17 +137,41 @@ pnpm dev
 
 This command uses Turborepo to start the development processes defined in the `package.json` of each app (`apps/native`, `apps/web`).
 
-- **Expo (`apps/native`):** By default, this might start the Metro bundler. You might need to press `i` for the iOS simulator or `a` for the Android emulator in the Metro terminal window.
-- **Next.js (`apps/web`):** This will typically start the web server on `http://localhost:3000`.
+- **Expo (`apps/native`):** By default, this starts the Expo development server. You can press `i` for the iOS simulator or `a` for the Android emulator in the terminal.
+- **Next.js (`apps/web`):** This will start the web server with Turbopack on `http://localhost:3000`.
 
 To run the development server for a specific app:
 
 ```bash
 # Run only the native app
-pnpm dev --filter native
+pnpm --filter @acme/native dev
 
 # Run only the web app
-pnpm dev --filter web
+pnpm --filter @acme/web dev
+```
+
+For native Android development with ADB reverse port forwarding:
+
+```bash
+pnpm --filter @acme/native adb
+```
+
+### Database Operations
+
+For database management, the following commands are available:
+
+```bash
+# Start Prisma Studio - a visual database explorer
+pnpm --filter @acme/db db:studio
+
+# Run database migrations in development
+pnpm --filter @acme/db db:migrate
+
+# Deploy migrations in production
+pnpm --filter @acme/db db:migrate:prod
+
+# Generate Prisma client and format schema
+pnpm --filter @acme/db generate-schemas
 ```
 
 ## Building for Production
@@ -161,14 +185,15 @@ pnpm build
 To build a specific app:
 
 ```bash
-# Build only the native app (triggers EAS build setup if configured)
-pnpm build --filter native
-
 # Build only the web app
-pnpm build --filter web
-```
+pnpm --filter @acme/web build
 
-For native builds, you'll likely use EAS Build (see Deployment section).
+# Build iOS native app (uses EAS build)
+pnpm --filter @acme/native build:ios
+
+# Build Android native app (uses EAS build)
+pnpm --filter @acme/native build:android
+```
 
 ## Deployment
 
@@ -180,11 +205,8 @@ Deploy the Next.js application to a hosting provider like [Vercel](https://verce
 
 1.  Connect your Git repository to Vercel.
 2.  When importing the project, set the **Root Directory** to `apps/web`. Vercel should automatically detect Next.js and configure the build settings.
-3.  Add your production environment variables (like `DATABASE_URL`, `AUTH_SECRET`, `GOOGLE_APPLICATION_CREDENTIALS`, etc.) in the Vercel project settings.
-4.  For Google service account integration, you'll need to either:
-    - Upload the service account file directly to your deployment platform and set the path, or
-    - Store the JSON content as an environment variable and dynamically write it to a file during build/runtime.
-5.  Deploy! Vercel handles the build process using Turborepo's remote caching if configured.
+3.  Add your production environment variables in the Vercel project settings.
+4.  Deploy! Vercel handles the build process using Turborepo's remote caching if configured.
 
 > **Note:** The deployed web application often serves as the backend API (tRPC) for the native app in production. Ensure the native app's configuration points to the correct production URL.
 
@@ -198,63 +220,35 @@ Deploying the Expo app involves building standalone binaries and submitting them
 
     ```bash
     # Install EAS CLI globally if you haven't already
-    pnpm add -g eas-cli
+    pnpm install -g eas-cli
 
     # Log in to your Expo account
     eas login
-
-    # Configure EAS Build within the native app directory
-    cd apps/native
-    eas build:configure
-    cd ../.. # Return to root
     ```
 
 3.  **Create a Production Build:**
 
     ```bash
-    # Build for iOS (creates an .ipa file)
-    pnpm build --filter native -- --platform ios --profile production
-    # or run from the native dir: eas build --platform ios --profile production
+    # Build for iOS locally (creates an .ipa file)
+    pnpm --filter @acme/native build:ios
 
-    # Build for Android (creates an .apk or .aab file)
-    pnpm build --filter native -- --platform android --profile production
-    # or run from the native dir: eas build --platform android --profile production
+    # Build for Android locally (creates an .apk or .aab file)
+    pnpm --filter @acme/native build:android
     ```
 
-    > EAS Build uses build profiles defined in `apps/native/eas.json`. The `production` profile is used by default if `--profile` is omitted.
+    > These commands use the `production` profile defined in `apps/native/eas.json`.
 
 4.  **Submit to Stores:** Use EAS Submit to upload your builds.
 
     ```bash
-    # Submit the latest iOS build
-    cd apps/native
-    eas submit --platform ios --latest
-    cd ../..
+    # Submit the latest iOS build (provide the path to the .ipa file)
+    pnpm --filter @acme/native submit:ios /path/to/your/app.ipa
 
-    # Submit the latest Android build
-    cd apps/native
-    eas submit --platform android --latest
-    cd ../..
+    # Submit the latest Android build (provide the path to the .aab file)
+    pnpm --filter @acme/native submit:android /path/to/your/app.aab
     ```
 
-    > You can also use `--auto-submit` with `eas build`. Complete the submission process in App Store Connect and Google Play Console.
-
-5.  **Over-the-Air (OTA) Updates (Optional but Recommended):** Use EAS Update to push JavaScript and asset changes directly to users without needing a new store submission.
-
-    ```bash
-    # Configure EAS Update (run once)
-    cd apps/native
-    pnpm expo install expo-updates
-    eas update:configure
-    cd ../..
-
-    # Publish an update (after making JS/asset changes)
-    cd apps/native
-    eas update --auto # Uses current git branch/commit message
-    cd ../..
-    ```
-
-    > Remember to create and submit a new native build via `eas build` whenever you add new native modules or change native configurations.
+    > Complete the submission process in App Store Connect and Google Play Console.
 
 ## Tooling
 
@@ -264,6 +258,25 @@ This monorepo includes shared configurations for essential development tools:
 - **ESLint:** Shared linting rules in `tooling/eslint`. Run `pnpm lint`.
 - **Prettier:** Shared code formatting rules in `tooling/prettier`. Run `pnpm format`.
 - **Tailwind CSS:** Shared configuration potentially used by both NativeWind (`apps/native`) and Tailwind CSS (`apps/web`) in `tooling/tailwind`.
+
+```bash
+# Run linting on all packages
+pnpm lint
+
+# Format all files
+pnpm format
+
+# Type check all packages
+pnpm typecheck
+```
+
+### Clean
+
+Often times you'll need to clean the cache and start fresh. This will remove all `node_modules` and other cache files.
+
+```bash
+pnpm clean
+```
 
 ## Attributions
 
