@@ -1,15 +1,11 @@
-import { withSentryConfig } from "@sentry/nextjs";
-
-/**
- * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful
- * for Docker builds.
- */
-import "./env";
-
 import { fileURLToPath } from "url";
+import { NextConfig } from "next";
+import { withSentryConfig } from "@sentry/nextjs";
 import createJiti from "jiti";
 
 import { env } from "./env";
+
+const { PrismaPlugin } = require("@prisma/nextjs-monorepo-workaround-plugin");
 
 // Import env files to validate at build time. Use jiti so we can load .ts files in here.
 createJiti(fileURLToPath(import.meta.url))("./env");
@@ -22,6 +18,17 @@ const config = {
   /** We already do linting and typechecking as separate tasks in CI */
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
+};
+
+module.exports = {
+  // Needed to fix Prisma runtime error https://github.com/prisma/prisma/discussions/22519#discussioncomment-12996611
+  webpack: (config: NextConfig, { isServer }: { isServer: boolean }) => {
+    if (isServer) {
+      config.plugins = [...config.plugins, new PrismaPlugin()];
+    }
+
+    return config;
+  },
 };
 
 export default withSentryConfig(config, {
