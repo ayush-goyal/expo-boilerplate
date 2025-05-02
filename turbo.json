@@ -39,12 +39,11 @@
     }
   },
   "globalEnv": [
-    "POSTGRES_URL",
-    "AUTH_DISCORD_ID",
-    "AUTH_DISCORD_SECRET",
-    "AUTH_REDIRECT_PROXY_URL",
-    "AUTH_SECRET",
-    "PORT"
+    "DATABASE_URL",
+    "DATABASE_DIRECT_URL",
+    "GOOGLE_CLOUD_PROJECT",
+    "GOOGLE_CLOUD_PRIVATE_KEY",
+    "GOOGLE_CLOUD_CLIENT_EMAIL"
   ],
   "globalPassThroughEnv": [
     "NODE_ENV",
