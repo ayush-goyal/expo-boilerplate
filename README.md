@@ -66,9 +66,30 @@ A modern, feature-rich monorepo boilerplate for building mobile and web applicat
     pnpm install
     ```
 
-2.  **Setup Firebase Account**
+2.  **Setup Firebase Project**
 
-    Setup a Firebase project and download the `GoogleService-Info.plist` file for iOS/Android and the `google-service-account-file.json` file for your backend server.
+    a. Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
+
+    b. Set up iOS app:
+
+    - Click "Add app" and select iOS
+    - Enter your iOS bundle ID (e.g., `com.yourcompany.yourapp`)
+    - Download the `GoogleService-Info.plist` file
+    - Place it in `apps/native` directory
+
+    c. Set up Android app:
+
+    - Click "Add app" and select Android
+    - Enter your Android package name (e.g., `com.yourcompany.yourapp`)
+    - Download the `google-services.json` file
+    - Place it in `apps/native` directory
+
+    d. Set up service account for backend:
+
+    - Go to Project Settings > Service accounts
+    - Click "Generate new private key" for your Firebase project
+    - Save the generated JSON file (e.g., `google-service-account-file.json`) securely
+    - Place it in `packages/api` directory
 
 3.  **Configure Environment Variables:**
 
@@ -79,7 +100,17 @@ A modern, feature-rich monorepo boilerplate for building mobile and web applicat
     # Update .env with your specific keys and secrets
     ```
 
-    Update the `GOOGLE_APPLICATION_CREDENTIALS` environment variable with the path to your `google-service-account-file.json` file.
+    Important Firebase-related environment variables:
+
+    ```bash
+    # Local development
+    GOOGLE_APPLICATION_CREDENTIALS=/path/to/your/google-service-account-file.json
+
+    # Production (based on `google-service-account-file.json`)
+    GOOGLE_CLOUD_PROJECT=
+    GOOGLE_CLOUD_PRIVATE_KEY=
+    GOOGLE_CLOUD_CLIENT_EMAIL=
+    ```
 
 4.  **Configure App Settings:**
 

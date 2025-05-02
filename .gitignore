@@ -51,5 +51,8 @@ generated/
 # turbo
 .turbo
 
+# Mobile Google Files
 GoogleService-Info.plist
+google-services.json
+
 google-service-account-file.json
