@@ -51,8 +51,5 @@ generated/
 # turbo
 .turbo
 
-# Mobile Google Files
-GoogleService-Info.plist
-google-services.json
-
+# server firebase file
 google-service-account-file.json
