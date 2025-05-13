@@ -53,3 +53,7 @@ generated/
 
 # server firebase file
 google-service-account-file.json
+
+# mobile files
+*.ipa
+*.apk
