@@ -7,7 +7,7 @@ import {
   RESULTS,
 } from "react-native-permissions";
 import { useAppState } from "@react-native-community/hooks";
-import { getMessaging } from "@react-native-firebase/messaging";
+import { FirebaseMessagingTypes, getMessaging } from "@react-native-firebase/messaging";
 import { useMutation } from "@tanstack/react-query";
 
 import { useTRPC } from "@/libs/trpc";
@@ -94,32 +94,44 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
     }
   }, [syncDeviceTokenToServer, showSettingsAlert]);
 
+  const handleNotification = useCallback((remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
+    // Implement notification handling and deep linking here
+  }, []);
+
   useEffect(() => {
     const unsubscribe = messaging.onTokenRefresh((newToken) => {
       setToken(newToken);
       syncDeviceTokenToServer();
     });
 
+    // Handle messages when the app is open
     const foregroundSubscription = messaging.onMessage(async (remoteMessage) => {
-      // Handle foreground messages here
       console.log("Received foreground message:", remoteMessage);
     });
 
-    messaging.onNotificationOpenedApp((remoteMessage) => {
+    // Handle messages when the app is opened from a background state
+    const backgroundSubscription = messaging.onNotificationOpenedApp((remoteMessage) => {
       console.log("Notification opened app:", remoteMessage);
+      handleNotification(remoteMessage);
     });
 
+    // Handle messages when the app is initially launched from a notification
     messaging.getInitialNotification().then((remoteMessage) => {
       if (remoteMessage) {
         console.log("Initial notification:", remoteMessage);
+
+        setTimeout(() => {
+          handleNotification(remoteMessage);
+        }, 1000);
       }
     });
 
     return () => {
       unsubscribe();
       foregroundSubscription();
+      backgroundSubscription();
     };
-  }, [syncDeviceTokenToServer]);
+  }, [syncDeviceTokenToServer, handleNotification]);
 
   useEffect(() => {
     (async () => {
