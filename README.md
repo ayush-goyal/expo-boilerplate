@@ -1,6 +1,6 @@
 # Expo Boilerplate
 
-A modern, feature-rich monorepo boilerplate for building mobile and web applications, leveraging Turborepo, Expo, and Next.js.
+A modern, feature-rich monorepo boilerplate for building mobile and web applications, leveraging Turborepo, Expo, and Next.js. This repository provides everything you need to build and successfully publish your React Native app to both the iOS App Store and Google Play Store.
 
 ## Features
 
@@ -18,6 +18,7 @@ A modern, feature-rich monorepo boilerplate for building mobile and web applicat
 - **Internationalization:** [i18next](https://www.i18next.com/).
 - **Additional Features:** RevenueCat, Toast notifications, PostHog analytics.
 - **Tooling:** Shared ESLint, Prettier, TypeScript configurations.
+- **App Store Submission:** Complete workflow for iOS App Store and Google Play Store submission using EAS Build and Submit.
 
 ## Prerequisites
 
@@ -277,6 +278,14 @@ Often times you'll need to clean the cache and start fresh. This will remove all
 ```bash
 pnpm clean
 ```
+
+## App Website
+
+The web server (`apps/web`) can also be used to host your app's landing page, privacy policy, and terms of service.
+
+1. **Landing Page:** The landing page is automatically set up in the `app/page.tsx` file. You can customize this file to create your marketing landing page.
+
+2. **Privacy Policy & Terms of Service:** Add markdown content to quickly render your privacy policy and terms of service.
 
 ## Attributions
 
