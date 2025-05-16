@@ -100,8 +100,9 @@ export const PhoneNumberInputScreen = () => {
               required: true,
               validate: (value) => isValidPhoneNumber(value, "US"),
             }}
-            render={({ field: { onChange, value } }) => (
+            render={({ field: { ref, onChange, value } }) => (
               <PhoneInput
+                ref={ref}
                 country="US"
                 onChange={onChange}
                 value={value}
