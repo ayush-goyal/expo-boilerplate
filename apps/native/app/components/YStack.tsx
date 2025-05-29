@@ -1,11 +1,9 @@
 import { PropsWithChildren } from "react";
-import { StyleProp, View, ViewStyle } from "react-native";
+import { View } from "react-native";
+
+import { cn } from "@/libs/utils";
 
 interface Props {
-  /**
-   * The style to apply to the stack.
-   */
-  style?: StyleProp<ViewStyle>;
   /**
    * The class name to apply to the stack.
    */
@@ -13,9 +11,5 @@ interface Props {
 }
 
 export default function YStack(props: PropsWithChildren<Props>) {
-  return (
-    <View style={props.style} className="flex">
-      {props.children}
-    </View>
-  );
+  return <View className={cn("flex flex-col", props.className)}>{props.children}</View>;
 }

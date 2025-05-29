@@ -1,12 +1,9 @@
 import type { PropsWithChildren } from "react";
-import type { StyleProp, ViewStyle } from "react-native";
 import { View } from "react-native";
 
+import { cn } from "@/libs/utils";
+
 interface Props {
-  /**
-   * The style to apply to the stack.
-   */
-  style?: StyleProp<ViewStyle>;
   /**
    * The class name to apply to the stack.
    */
@@ -14,9 +11,5 @@ interface Props {
 }
 
 export default function XStack(props: PropsWithChildren<Props>) {
-  return (
-    <View style={props.style} className="flex-row">
-      {props.children}
-    </View>
-  );
+  return <View className={cn("flex flex-row", props.className)}>{props.children}</View>;
 }
