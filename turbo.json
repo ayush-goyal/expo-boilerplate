@@ -1,6 +1,7 @@
 {
   "$schema": "https://turborepo.org/schema.json",
   "ui": "tui",
+  "envMode": "loose",
   "tasks": {
     "topo": {
       "dependsOn": ["^topo"]
@@ -10,9 +11,8 @@
       "outputs": [".cache/tsbuildinfo.json", "dist/**"]
     },
     "dev": {
-      "dependsOn": ["^dev"],
       "cache": false,
-      "persistent": false
+      "persistent": true
     },
     "format": {
       "outputs": [".cache/.prettiercache"],
@@ -28,29 +28,6 @@
     },
     "clean": {
       "cache": false
-    },
-    "push": {
-      "cache": false,
-      "interactive": true
-    },
-    "studio": {
-      "cache": false,
-      "persistent": true
     }
-  },
-  "globalEnv": [
-    "DATABASE_URL",
-    "DATABASE_DIRECT_URL",
-    "GOOGLE_CLOUD_PROJECT",
-    "GOOGLE_CLOUD_PRIVATE_KEY",
-    "GOOGLE_CLOUD_CLIENT_EMAIL"
-  ],
-  "globalPassThroughEnv": [
-    "NODE_ENV",
-    "CI",
-    "VERCEL",
-    "VERCEL_ENV",
-    "VERCEL_URL",
-    "npm_lifecycle_event"
-  ]
+  }
 }
