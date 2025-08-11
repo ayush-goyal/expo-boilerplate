@@ -18,7 +18,7 @@
     "@acme/db": "workspace:*",
     "@prisma/nextjs-monorepo-workaround-plugin": "^6.7.0",
     "@radix-ui/react-slot": "^1.2.0",
-    "@sentry/nextjs": "^9.12.0",
+    "@sentry/nextjs": "^10",
     "@t3-oss/env-nextjs": "^0.12.0",
     "@tanstack/react-query": "catalog:",
     "@trpc/client": "catalog:",
