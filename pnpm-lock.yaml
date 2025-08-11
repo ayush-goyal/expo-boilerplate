@@ -584,9 +584,6 @@ importers:
       eslint-plugin-react-native:
         specifier: ^5.0.0
         version: 5.0.0(eslint@8.57.1)
-      eslint-plugin-turbo:
-        specifier: ^2.4.4
-        version: 2.5.0(eslint@8.57.1)(turbo@2.5.0)
       typescript-eslint:
         specifier: ^8.27.0
         version: 8.29.1(eslint@8.57.1)(typescript@5.8.3)
@@ -6769,13 +6766,6 @@ packages:
       }
     engines: { node: ">=12" }
 
-  dotenv@16.0.3:
-    resolution:
-      {
-        integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==,
-      }
-    engines: { node: ">=12" }
-
   dotenv@16.4.7:
     resolution:
       {
@@ -7110,15 +7100,6 @@ packages:
     engines: { node: ">=4" }
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7
-
-  eslint-plugin-turbo@2.5.0:
-    resolution:
-      {
-        integrity: sha512-qQk54MrUZv0gnpxV23sccTc+FL3UJ8q7vG7HmXuS2RP8gdjWDwI1CCJTJD8EdRIDjsMxF0xi0AKcMY0CwIlXVg==,
-      }
-    peerDependencies:
-      eslint: ">6.6.0"
-      turbo: ">2.0.0"
 
   eslint-scope@5.1.1:
     resolution:
@@ -11732,6 +11713,7 @@ packages:
       {
         integrity: sha512-n5HGcxUuVaTf9QJPs/W22xQpC2Z9u0nb0KgLPnVltP8vdUvOp6+R26gF55kilP/fV4eL4vsAHUqUjewppJMBOQ==,
       }
+    deprecated: react-native-vector-icons package has moved to a new model of per-icon-family packages. See the https://github.com/oblador/react-native-vector-icons/blob/master/MIGRATION.md on how to migrate
     hasBin: true
 
   react-native-web@0.19.13:
@@ -18547,8 +18529,6 @@ snapshots:
     dependencies:
       dotenv: 16.4.7
 
-  dotenv@16.0.3: {}
-
   dotenv@16.4.7: {}
 
   dunder-proto@1.0.1:
@@ -18871,12 +18851,6 @@ snapshots:
       semver: 6.3.1
       string.prototype.matchall: 4.0.12
       string.prototype.repeat: 1.0.0
-
-  eslint-plugin-turbo@2.5.0(eslint@8.57.1)(turbo@2.5.0):
-    dependencies:
-      dotenv: 16.0.3
-      eslint: 8.57.1
-      turbo: 2.5.0
 
   eslint-scope@5.1.1:
     dependencies:
