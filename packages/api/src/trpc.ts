@@ -24,20 +24,15 @@ import { ZodError } from "zod";
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createTRPCContext = async (req: NextRequest) => {
+export const createTRPCContext = async (opts: { headers: Headers }) => {
   let decodedIdToken: DecodedIdToken | null = null;
 
   try {
-    const authHeader = req.headers.get("Authorization");
+    const authHeader = opts.headers.get("Authorization");
     if (authHeader?.startsWith("Bearer ")) {
       const idToken = authHeader.split("Bearer ")[1];
       if (idToken) {
         decodedIdToken = await getAuth().verifyIdToken(idToken);
-      }
-    } else {
-      const sessionCookie = req.cookies.get("session");
-      if (sessionCookie) {
-        decodedIdToken = await getAuth().verifySessionCookie(sessionCookie.value);
       }
     }
   } catch (err) {
