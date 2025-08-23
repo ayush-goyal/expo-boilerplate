@@ -1,0 +1,48 @@
+{
+  "name": "@acme/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsup",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "dev": "pnpm with-env tsx watch src/index.ts",
+    "start": "pnpm with-env node dist/index.cjs",
+    "format": "prettier --write . --ignore-path ../../.gitignore",
+    "lint": "eslint --fix .",
+    "typecheck": "tsc --noEmit",
+    "with-env": "dotenv -e ../../.env --"
+  },
+  "dependencies": {
+    "@acme/api": "workspace:*",
+    "@acme/db": "workspace:*",
+    "@trpc/server": "catalog:",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "helmet": "^8.1.0",
+    "superjson": "catalog:",
+    "tsup": "^8.5.0",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@acme/eslint-config": "workspace:*",
+    "@acme/prettier-config": "workspace:*",
+    "@acme/tsconfig": "workspace:*",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.11",
+    "dotenv-cli": "^8.0.0",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "tsx": "^4.19.3",
+    "typescript": "catalog:"
+  },
+  "prettier": "@acme/prettier-config",
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@acme/eslint-config/base"
+    ]
+  }
+}
