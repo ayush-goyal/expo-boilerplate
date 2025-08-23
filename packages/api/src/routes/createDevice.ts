@@ -15,7 +15,7 @@ export default protectedProcedure
   .mutation(async ({ ctx, input }) => {
     const numberOfExistingDevices = await db.device.count({
       where: {
-        userId: ctx.user.uid,
+        userId: ctx.user.id,
       },
     });
     if (numberOfExistingDevices > 10) {
@@ -28,12 +28,12 @@ export default protectedProcedure
     const device = await db.device.upsert({
       where: {
         userId_fcmToken: {
-          userId: ctx.user.uid,
+          userId: ctx.user.id,
           fcmToken: input.fcmToken,
         },
       },
       create: {
-        userId: ctx.user.uid,
+        userId: ctx.user.id,
         fcmToken: input.fcmToken,
         platform: input.platform,
       },

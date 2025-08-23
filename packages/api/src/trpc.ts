@@ -8,9 +8,10 @@
  */
 import { type NextRequest } from "next/server";
 import { initTRPC, TRPCError } from "@trpc/server";
-import { DecodedIdToken, getAuth } from "firebase-admin/auth";
 import superjson from "superjson";
 import { ZodError } from "zod";
+
+import { auth } from "@acme/auth";
 
 /**
  * 1. CONTEXT
@@ -25,24 +26,14 @@ import { ZodError } from "zod";
  * @see https://trpc.io/docs/server/context
  */
 export const createTRPCContext = async (opts: { headers: Headers }) => {
-  let decodedIdToken: DecodedIdToken | null = null;
+  const authSession = await auth.api.getSession({
+    headers: opts.headers,
+  });
 
-  try {
-    const authHeader = opts.headers.get("Authorization");
-    if (authHeader?.startsWith("Bearer ")) {
-      const idToken = authHeader.split("Bearer ")[1];
-      if (idToken) {
-        decodedIdToken = await getAuth().verifyIdToken(idToken);
-      }
-    }
-  } catch (err) {
-    throw new TRPCError({
-      code: "BAD_REQUEST",
-      cause: err,
-    });
-  }
   return {
-    user: decodedIdToken,
+    ...opts,
+    session: authSession?.session ?? null,
+    user: authSession?.user ?? null,
   };
 };
 
@@ -105,13 +96,14 @@ export const publicProcedure = t.procedure;
  * It will throw a UNAUTHORIZED error if the user is not authenticated.
  */
 export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
-  if (!ctx.user?.uid) {
+  if (!ctx.session || !ctx.user?.id) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
 
   return next({
     ctx: {
       ...ctx,
+      session: ctx.session,
       user: ctx.user,
     },
   });
