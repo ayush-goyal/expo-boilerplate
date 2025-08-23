@@ -44,8 +44,8 @@
       "expo-localization",
       "expo-font",
       "@react-native-firebase/app",
-      "@react-native-firebase/auth",
       "@react-native-firebase/app-check",
+      "@react-native-firebase/messaging",
       [
         "react-native-permissions",
         {
@@ -67,7 +67,8 @@
           "project": "expo-boilerplate",
           "organization": "acme"
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "experiments": {
       "tsconfigPaths": true

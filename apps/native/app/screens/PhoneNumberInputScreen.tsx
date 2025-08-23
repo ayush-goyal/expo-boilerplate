@@ -69,13 +69,13 @@ export const PhoneNumberInputScreen = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
-  const { signInWithPhoneNumber } = useAuth();
+  const { sendPhoneNumberOtp } = useAuth();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const startPhoneNumberVerification: SubmitHandler<FormValues> = async (data: FormValues) => {
     setIsLoading(true);
     try {
-      await signInWithPhoneNumber(data.phoneNumber);
+      await sendPhoneNumberOtp(data.phoneNumber);
       navigation.navigate("VerifyCode", { phoneNumber: data.phoneNumber });
     } catch (error: any) {
       console.error("Phone Sign-In Error:", error);

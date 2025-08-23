@@ -1,6 +1,5 @@
 import { PropsWithChildren, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getAuth } from "@react-native-firebase/auth";
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
 import { defaultShouldDehydrateQuery, QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
@@ -10,6 +9,7 @@ import SuperJSON from "superjson";
 import type { AppRouter } from "@acme/api";
 
 import Config from "@/config";
+import { authClient } from "@/libs/auth-client";
 import { TRPCProvider } from "@/libs/trpc";
 
 // Create a new persister instance
@@ -43,23 +43,17 @@ const queryClient = new QueryClient({
   },
 });
 
-const getAuthorizationToken = async () => {
-  const user = getAuth().currentUser;
-  if (!user) {
-    return undefined;
-  }
-  const firebaseToken = await user.getIdToken();
-  return `Bearer ${firebaseToken}`;
-};
-
 const trpcClient = createTRPCClient<AppRouter>({
   links: [
     httpLink({
       url: Config.API_URL + "/api/trpc",
       async headers() {
-        return {
-          Authorization: await getAuthorizationToken(),
-        };
+        const headers = new Map<string, string>();
+        const cookies = authClient.getCookie();
+        if (cookies) {
+          headers.set("Cookie", cookies);
+        }
+        return Object.fromEntries(headers);
       },
       transformer: SuperJSON,
     }),

@@ -23,7 +23,7 @@ export const VerifyCodeScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
   const [timeLeft, setTimeLeft] = useState(30);
-  const { confirmVerificationCode, signInWithPhoneNumber } = useAuth();
+  const { confirmVerificationCode, sendPhoneNumberOtp } = useAuth();
   const navigation = useNavigation();
   const {
     params: { phoneNumber },
@@ -59,7 +59,7 @@ export const VerifyCodeScreen = () => {
 
     setIsLoading(true);
     try {
-      await confirmVerificationCode(code);
+      await confirmVerificationCode(code, phoneNumber);
       navigation.navigate("MainTabs", { screen: "HomeTab", pop: true });
     } catch (error: any) {
       console.error("Code Verification Error:", error);
@@ -77,7 +77,7 @@ export const VerifyCodeScreen = () => {
 
     setResendLoading(true);
     try {
-      await signInWithPhoneNumber(phoneNumber, true); // Use forceResend to request a new code
+      await sendPhoneNumberOtp(phoneNumber);
       setCode("");
       setTimeLeft(30);
       Alert.alert("Success", "A new verification code has been sent.");
