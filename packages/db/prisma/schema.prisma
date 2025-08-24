@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/client"
@@ -9,6 +8,7 @@ datasource db {
   url       = env("DATABASE_URL")
   directUrl = env("DATABASE_DIRECT_URL")
 }
+
 model User {
   id                  String    @id @default(uuid())
   name                String
@@ -36,7 +36,7 @@ enum DevicePlatform {
 
 model Device {
   userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   fcmToken  String
   platform  DevicePlatform
   createdAt DateTime       @default(now())
