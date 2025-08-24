@@ -2,6 +2,8 @@ import cors from "cors";
 import express from "express";
 import helmet from "helmet";
 
+import { db } from "@acme/db";
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -19,8 +21,11 @@ app.use(
 app.use(express.json());
 
 app.get("/", (req, res) => {
+  const userCount = db.user.count();
+
   res.json({
     message: "Hello World",
+    userCount: userCount,
   });
 });
 
