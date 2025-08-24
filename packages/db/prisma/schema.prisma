@@ -22,10 +22,28 @@ model User {
   stripeCustomerId    String?
   sessions            Session[]
   accounts            Account[]
+  devices             Device[]
 
   @@unique([email])
   @@unique([phoneNumber])
   @@map("user")
+}
+
+enum DevicePlatform {
+  IOS
+  ANDROID
+}
+
+model Device {
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fcmToken  String
+  platform  DevicePlatform
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@id([userId, fcmToken])
+  @@map("devices")
 }
 
 model Session {
