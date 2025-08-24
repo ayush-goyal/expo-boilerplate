@@ -7,6 +7,8 @@ import { TRPCReactProvider } from "@/trpc/react";
 
 import "@/styles/globals.css";
 
+import { Toaster } from "@/components/ui/sonner";
+
 export const metadata: Metadata = {
   title: "Next App",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
@@ -22,6 +24,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               <PostHogProvider>{children}</PostHogProvider>
             </SentryProvider>
           </TRPCReactProvider>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
