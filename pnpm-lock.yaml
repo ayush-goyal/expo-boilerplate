@@ -43,8 +43,8 @@ catalogs:
       specifier: ^5.8.2
       version: 5.8.3
     zod:
-      specifier: ^3.24.2
-      version: 3.24.2
+      specifier: ^4
+      version: 4.1.0
 
 importers:
   .:
@@ -397,7 +397,7 @@ importers:
         version: 8.5.0(jiti@2.5.1)(postcss@8.5.3)(tsx@4.20.4)(typescript@5.8.3)(yaml@2.7.1)
       zod:
         specifier: "catalog:"
-        version: 3.24.2
+        version: 4.1.0
     devDependencies:
       "@acme/eslint-config":
         specifier: workspace:*
@@ -443,7 +443,7 @@ importers:
         version: link:../../packages/db
       "@better-auth/stripe":
         specifier: ^1.3.4
-        version: 1.3.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@3.24.2)
+        version: 1.3.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@4.1.0)
       "@prisma/nextjs-monorepo-workaround-plugin":
         specifier: ^6.7.0
         version: 6.7.0
@@ -455,7 +455,7 @@ importers:
         version: 10.4.0(@opentelemetry/context-async-hooks@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.0.1(@opentelemetry/api@1.9.0))(next@15.3.0(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(webpack@5.99.5)
       "@t3-oss/env-nextjs":
         specifier: ^0.12.0
-        version: 0.12.0(typescript@5.8.3)(zod@3.24.2)
+        version: 0.12.0(typescript@5.8.3)(zod@4.1.0)
       "@tanstack/react-query":
         specifier: "catalog:"
         version: 5.72.2(react@18.3.1)
@@ -470,7 +470,7 @@ importers:
         version: 11.0.4(@tanstack/react-query@5.72.2(react@18.3.1))(@trpc/client@11.0.4(@trpc/server@11.0.4(typescript@5.8.3))(typescript@5.8.3))(@trpc/server@11.0.4(typescript@5.8.3))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3)
       better-auth:
         specifier: ^1.3.4
-        version: 1.3.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@3.24.2)
+        version: 1.3.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@4.1.0)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -512,7 +512,7 @@ importers:
         version: 3.2.0
       zod:
         specifier: "catalog:"
-        version: 3.24.2
+        version: 4.1.0
     devDependencies:
       "@acme/eslint-config":
         specifier: workspace:*
@@ -576,7 +576,7 @@ importers:
         version: 2.2.2
       zod:
         specifier: "catalog:"
-        version: 3.24.2
+        version: 4.1.0
     devDependencies:
       "@acme/eslint-config":
         specifier: workspace:*
@@ -609,13 +609,13 @@ importers:
         specifier: ^3.828.0
         version: 3.873.0
       "@better-auth/stripe":
-        specifier: ^1.3.4
+        specifier: ^1.3.7
         version: 1.3.7(react-dom@18.3.1(react@19.1.1))(react@19.1.1)(zod@4.1.0)
       "@react-email/components":
         specifier: ^0.5.1
         version: 0.5.1(react-dom@18.3.1(react@19.1.1))(react@19.1.1)
       better-auth:
-        specifier: ^1.3.4
+        specifier: ^1.3.7
         version: 1.3.7(react-dom@18.3.1(react@19.1.1))(react@19.1.1)(zod@4.1.0)
       react:
         specifier: ^19.0.0
@@ -665,7 +665,7 @@ importers:
         version: 6.6.0(typescript@5.8.3)
       zod:
         specifier: "catalog:"
-        version: 3.24.2
+        version: 4.1.0
     devDependencies:
       "@acme/eslint-config":
         specifier: workspace:*
@@ -17915,10 +17915,10 @@ snapshots:
       better-call: 1.0.16
       zod: 4.1.0
 
-  "@better-auth/stripe@1.3.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@3.24.2)":
+  "@better-auth/stripe@1.3.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@4.1.0)":
     dependencies:
-      better-auth: 1.3.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@3.24.2)
-      zod: 3.24.2
+      better-auth: 1.3.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@4.1.0)
+      zod: 4.1.0
     transitivePeerDependencies:
       - react
       - react-dom
@@ -20702,17 +20702,17 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  "@t3-oss/env-core@0.12.0(typescript@5.8.3)(zod@3.24.2)":
+  "@t3-oss/env-core@0.12.0(typescript@5.8.3)(zod@4.1.0)":
     optionalDependencies:
       typescript: 5.8.3
-      zod: 3.24.2
+      zod: 4.1.0
 
-  "@t3-oss/env-nextjs@0.12.0(typescript@5.8.3)(zod@3.24.2)":
+  "@t3-oss/env-nextjs@0.12.0(typescript@5.8.3)(zod@4.1.0)":
     dependencies:
-      "@t3-oss/env-core": 0.12.0(typescript@5.8.3)(zod@3.24.2)
+      "@t3-oss/env-core": 0.12.0(typescript@5.8.3)(zod@4.1.0)
     optionalDependencies:
       typescript: 5.8.3
-      zod: 3.24.2
+      zod: 4.1.0
 
   "@tailwindcss/node@4.1.11":
     dependencies:
@@ -21672,24 +21672,6 @@ snapshots:
   base64id@2.0.0: {}
 
   basic-ftp@5.0.5: {}
-
-  better-auth@1.3.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@3.24.2):
-    dependencies:
-      "@better-auth/utils": 0.2.6
-      "@better-fetch/fetch": 1.1.18
-      "@noble/ciphers": 0.6.0
-      "@noble/hashes": 1.8.0
-      "@simplewebauthn/browser": 13.1.2
-      "@simplewebauthn/server": 13.1.2
-      better-call: 1.0.16
-      defu: 6.1.4
-      jose: 5.10.0
-      kysely: 0.28.5
-      nanostores: 0.11.4
-      zod: 3.24.2
-    optionalDependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
 
   better-auth@1.3.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@4.1.0):
     dependencies:
