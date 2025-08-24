@@ -5,7 +5,7 @@ import { Resend } from "resend";
 import EmailVerificationEmail from "./emails/email-verification-email";
 import PasswordResetEmail from "./emails/password-reset-email";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend("test");
 
 const FROM_EMAIL = "Company Name <support@transactional.example.com>";
 
