@@ -23,9 +23,10 @@
     "@aws-sdk/client-s3": "^3.828.0",
     "@aws-sdk/s3-request-presigner": "^3.828.0",
     "@better-auth/stripe": "catalog:",
+    "@better-auth/expo": "catalog:",
     "@react-email/components": "^0.5.1",
     "better-auth": "catalog:",
-    "react": "^19.0.0",
+    "react": "catalog:",
     "react-email": "4.0.2",
     "resend": "^4.1.2",
     "stripe": "^17.7.0",
@@ -38,7 +39,8 @@
     "dotenv-cli": "^8.0.0",
     "eslint": "catalog:",
     "prettier": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "@types/react": "catalog:"
   },
   "prettier": "@acme/prettier-config",
   "eslintConfig": {
