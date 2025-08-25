@@ -20,8 +20,8 @@ app.use(
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  const userCount = db.user.count();
+app.get("/", async (req, res) => {
+  const userCount = await db.user.count();
 
   res.json({
     message: "Hello World",
