@@ -21,6 +21,7 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "with-env": "dotenv -e ../../.env --",
     "generate-schemas": "prisma generate && prisma format",
+    "generate": "prisma generate",
     "postinstall": "pnpm generate-schemas"
   },
   "dependencies": {
