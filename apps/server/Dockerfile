@@ -1,58 +1,56 @@
 FROM node:22.14-alpine AS base
+
+# Setup pnpm
 RUN corepack enable && corepack prepare pnpm@10.6.3 --activate
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
-# Pruner stage - extract subset of monorepo
-FROM base AS pruner
+# Builder stage - prunes the monorepo
+FROM base AS builder
+RUN apk update
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
-RUN pnpm add -g turbo
+
+# Install turbo globally
+RUN pnpm add -g turbo@^2.5.6
+
+# Copy entire monorepo and prune for server workspace
 COPY . .
 RUN turbo prune @acme/server --docker
 
-# Dependencies stage - install all deps
-FROM base AS deps
-RUN apk add --no-cache libc6-compat python3 make g++ cairo-dev jpeg-dev pango-dev giflib-dev
-WORKDIR /app
-
-COPY --from=pruner /app/out/json/ .
-COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
-COPY --from=pruner /app/out/full/packages/db/prisma ./packages/db/prisma
-
-# Install dependencies
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-
-# Builder stage - build the project
-FROM deps AS builder
-WORKDIR /app
-
-COPY --from=pruner /app/out/full/ .
-COPY turbo.json turbo.json
-
-# Build the project
-RUN pnpm turbo build --filter=@acme/server
-
-# Remove dev dependencies
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm prune --prod
-
-# Runner stage - minimal production image
-FROM node:22.14-alpine AS runner
+# Installer stage - installs dependencies and builds the project
+FROM base AS installer
+RUN apk update
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
+# First install dependencies (as they change less often)
+COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    pnpm install --frozen-lockfile --ignore-scripts
+
+# Copy full source and build the project
+COPY --from=builder /app/out/full/ .
+COPY --from=builder /app/turbo.json ./turbo.json
+RUN pnpm build --filter=@acme/server
+
+# Runner stage - minimal production image
+FROM base AS runner
+WORKDIR /app
+
+# Don't run production as root
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nodejs
 
-ENV NODE_ENV=production
+# Copy built application with correct ownership
+COPY --from=installer --chown=nodejs:nodejs /app/node_modules ./node_modules
+COPY --from=installer --chown=nodejs:nodejs /app/apps/server/dist ./apps/server/dist
+COPY --from=installer --chown=nodejs:nodejs /app/apps/server/package.json ./apps/server/package.json
+COPY --from=installer --chown=nodejs:nodejs /app/packages ./packages
 
-# Copy the pruned monorepo with production dependencies
-COPY --from=builder --chown=nodejs:nodejs /app .
-
-# Switch to non-root user
 USER nodejs
-
-# Expose the port the app runs on
+ENV NODE_ENV=production
 EXPOSE 3001
 
 # Health check
