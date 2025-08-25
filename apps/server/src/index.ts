@@ -18,7 +18,7 @@ app.use(
     credentials: true,
   })
 );
-app.use(morgan("tiny"));
+app.use(morgan("common"));
 
 app.use(express.json());
 
