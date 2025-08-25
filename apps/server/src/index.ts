@@ -1,6 +1,7 @@
 import cors from "cors";
 import express from "express";
 import helmet from "helmet";
+import morgan from "morgan";
 
 import { db } from "@acme/db";
 
@@ -17,6 +18,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(morgan("tiny"));
 
 app.use(express.json());
 

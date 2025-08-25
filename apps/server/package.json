@@ -21,6 +21,7 @@
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "helmet": "^8.1.0",
+    "morgan": "^1.10.1",
     "superjson": "catalog:",
     "tsup": "^8.5.0",
     "zod": "catalog:"
@@ -31,6 +32,7 @@
     "@acme/tsconfig": "workspace:*",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "@types/morgan": "^1.9.10",
     "@types/node": "^22.13.11",
     "dotenv-cli": "^8.0.0",
     "eslint": "catalog:",
